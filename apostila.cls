@@ -2,7 +2,7 @@
 \ProvidesClass{apostila}
 \LoadClass[a4paper,oneside]{book}
 
-\RequirePackage[a4paper, total={5in, 10in}]{geometry}
+\RequirePackage[a4paper, total={6in, 10in}]{geometry}
 \RequirePackage[brazil]{babel}
 \RequirePackage{titlesec}
 \RequirePackage{FiraSans}
@@ -24,3 +24,14 @@
     {0pt}  % Sep label-title.
     {} % Before.
     {} % After.
+
+% Capítulo.
+\titleformat{\chapter}
+        {\scshape\Huge}
+        {\begin{tikzpicture}[overlay]
+            \fill[color=Emerald] (-5cm,-1pt) rectangle (30pt,19pt);
+        \end{tikzpicture}
+        \color{white}\thechapter}
+        {10pt}
+        {}
+        {}
