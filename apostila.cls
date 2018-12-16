@@ -11,6 +11,8 @@
 \RequirePackage[dvipsnames]{xcolor}
 \RequirePackage{tikz}
 \RequirePackage{tcolorbox}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
 
 % Parte.
 \titleformat{\part}[display]

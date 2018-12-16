@@ -1,0 +1,45 @@
+Enquanto a Lógica Proposicional tem como base proposições, onde enunciados são inteiramente representados por variáveis, Gottlob Frege buscou, em 1879, obter uma linguagem simbólica mais rica, que representa enunciados na qual os objetos mencionados nesses enunciados tenham uma representação própria. Observe as seguintes sentenças declarativas abaixo.
+
+\begin{enumerate}
+    \item Se o unicórnio é lenda, é imortal, mas se não é lenda, é mamífero.
+    \item O unicórnio, se é imortal ou mamífero, é chifrudo.
+    \item O unicórnio, se é chifrudo, é bruxaria.
+\end{enumerate}
+Queremos saber: o unicórnio é lenda? É bruxaria? É chifrudo? Vamos representar as sentenças na lógica proposicional na seguinte forma:
+
+\begin{itemize}
+    \item $l =$ ``O unicórnio é lenda.''
+    \item $i =$ ``O unicórnio é imortal.''
+    \item $m =$ ``O unicórnio é mamífero.''
+    \item $c =$ ``O unicórnio é chifrudo.''
+    \item $b =$ ``O unicórnio é bruxaria.''
+\end{itemize}
+\begin{enumerate}
+    \item $(l \rightarrow i) \land (\neg l \rightarrow m)$
+    \item $(i \lor m) \rightarrow c$
+    \item $c \rightarrow b$
+\end{enumerate}
+Basta saber então, se $\{1,2,3\}$ acarreta em $l$, $c$ ou $b$. Podemos usar algum dos métodos algorítmicos que resolvem SAT para resolver esse problema. Agora, vejamos as sentenças abaixo.
+
+\begin{enumerate}
+    \item[4.] O jumento é primo do unicórnio.
+    \item[5.] Todo primo do unicórnio é chifrudo.
+    \item[6.] Algum primo do unicórnio não é bruxaria.
+    \item[7.] A fêmea do jumento é chifruda.   
+\end{enumerate}
+Na lógica proposicional, cada uma das sentenças tem que ser representada por uma variável. Isso implica em perda de expressividade, pois não podemos representar conceitos como ``primo de'', ``todo'', ``algum'', ``fêmea de''. Sendo assim, queremos usar símbolos que nos permitam representar os objetos e as relações entre eles. Temos:
+\begin{description}
+    \item[Objetos] $j$: jumento; $u$: unicórnio; $f(j)$: fêmea do jumento
+    \item[Predicados e relações] $L(x)$: $x$ é lenda; $I(x)$: $x$ é imortal; $M(x)$: $x$ é mamífero; $C(x)$: $x$ é chifrudo; $B(x)$: $x$ é bruxaria; $P(x,y)$: $x$ é primo de $y$   
+\end{description}
+Adicionalmente, usamos os símbolos $\forall x$ para representar ``para todo $x$'' e $\exists x$ para ``existe $x$''. Assim, podemos representar as sentenças 1 a 7 como:
+\begin{enumerate}
+    \item $(L(u) \rightarrow I(u)) \land (\neg L(u) \rightarrow M(u))$
+    \item $(I(u) \lor M(u)) \rightarrow C(u)$
+    \item $C(u) \rightarrow B(u)$
+    \item $P(j, u)$
+    \item $\forall x(P(x,u) \rightarrow C(x))$
+    \item $\exists x(P(x,u) \land \neg B(x))$
+    \item $C(f(j))$
+\end{enumerate}
+A lógica que lida com esses símbolos é dita \textbf{Lógica de Primeira Ordem} ou \textbf{Lógica de Predicados}. 
