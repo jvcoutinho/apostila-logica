@@ -42,6 +42,17 @@
         {}
         {}
 
+% Seção
+\titleformat{\section}
+        {\scshape\Large}
+        {\begin{tikzpicture}[overlay]
+            \fill[color=Emerald] (-5cm,-5pt) rectangle (\the\paperwidth,15pt);
+        \end{tikzpicture}
+        \color{white}\thesection}
+        {10pt}
+        {}
+        {}
+
 \newenvironment{definition}[1]
         {
             \vspace{10pt}
