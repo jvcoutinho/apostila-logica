@@ -1,1 +1,93 @@
 \chapter{Estruturas}
+
+Como vimos, o vocabulário simbólico da lógica de predicados inclui símbolos para representar objetos e predicados, além de símbolos para os conectivos. Assim, a noção de valoração-verdade é incompatível com a lógica de primeira ordem, e necessitamos enriquecê-la para algo que nos permita atribuir valores aos objetos e predicados. Tomamos então, o conceito de \textbf{estrutura matemática}.
+\begin{definition}{Estrutura Matemática}
+    Uma estrutura $A$ é definida por 4 componentes:
+    \begin{itemize}
+        \item Conjunto de objetos chamado de \textbf{domínio} ou \textbf{universo} de $A$ -- denotado por $dom(A)$.
+        \item Subconjunto de elementos de $dom(A)$ considerados \textbf{destaques} ou \textbf{constantes}.
+        \item Conjunto de \textbf{relações} sobre $dom(A)$, cada uma com sua aridade.
+        \item Conjunto de \textbf{funções} sobre $dom(A)$, cada uma com sua aridade.
+    \end{itemize}
+\end{definition}
+
+Para ilustrar o conceito, eis três exemplos:
+\begin{description}
+    \item[A:]
+     
+    \begin{center}
+        \begin{structure}
+            {$\mathbb{N}$}
+            {}
+            {$<$$(-,-)$}
+            {$0$\\$1$}
+            {sucessor$(-)$\\soma$(-,-)$}
+        \end{structure}
+    \end{center} 
+
+    \item[B:]
+        \begin{center}
+            \begin{structure}
+                {Estados do Brasil}
+                {}
+                {tem-litoral$(-)$\\mais-rico-que$(-,-)$}
+                {SP\\PE}
+                {mais-populoso$(-,-)$}
+            \end{structure}
+        \end{center} 
+
+        \item[C:]
+        \begin{center}
+            \begin{structure}
+                {$\mathbb{N}$}
+                {}
+                {divide$(-,-)$\\primo$(-)$}
+                {2\\3}
+                {quadrado$(-)$}
+            \end{structure}
+        \end{center} 
+\end{description}
+
+Uma vez definida uma estrutura, podemos criar um vocabulário simbólico sobre a estrutura que nos permita codificar sentenças na lógica de predicados. Tal vocabulário deve dizer quão rica ou simples é a estrutura, envolvendo o número de relações, destaques e funções. Chamamos esse vocabulário de \textbf{assinatura} da estrutura.
+\begin{definition}{Assinatura}
+    Seja $A$ uma estrutura. A assinatura $L$ de $A$ é definida pelos seguintes componentes:
+    \begin{itemize}
+        \item Quantidade de símbolos de destaques e os símbolos.
+        \item Quantidade de símbolos de relações $n$-árias, onde $n \in \mathbb{N}$, e os símbolos.
+        \item Quantidade de símbolos de funções $n$-árias, onde $n \in \mathbb{N}$, e os símbolos. 
+    \end{itemize}
+    $A$ é dita $L$-Estrutura.
+\end{definition} 
+
+A assinatura diz respeito somente à quantidade de símbolos. A definição dos mesmos é feita na \textbf{linguagem}. Mas, por simplicidade, unimos os dois conceitos. Assim, podemos definir a assinatura de $A$ como:
+\begin{itemize}
+    \item 2 símbolos de destaques: $a$ e $b$;
+    \item 1 símbolo de relação binária: $R$;
+    \item 1 símbolo de função unária: $f$;
+    \item 1 símbolo de função binária: $g$.
+\end{itemize}
+Uma vez definidos os símbolos, precisamos dizer o que eles representam em uma estrutura, para que possamos avaliar as sentenças que usam esses símbolos. Tal processo chama-se \textbf{interpretação}.
+\begin{definition}{Interpretação}
+    Seja $L$ uma assinatura e $A$ uma $L$-Estrutura. A interpretação de $L$ em $A$ é uma associação de cada símbolo de $L$ a um elemento de cada componente de $A$, tal que:
+
+    \begin{itemize}
+        \item A cada símbolo $c$ de constante, associa-se um elemento destacado do domínio de $A$ (notação $c^A$).
+        \item A cada símbolo $R$ de relação de aridade $n$, associa-se uma relação de $A$ de aridade $n$ (notação $R^A$).
+        \item A cada símbolo $f$ de relação de aridade $n$, associa-se uma função de $A$ de aridade $n$ (notação $f^A$).
+    \end{itemize}
+\end{definition}
+
+Assim, podemos tomar a seguinte interpretação da assinatura de $A$ em $A$:
+\begin{itemize}
+    \item $a^A = 0$ e $b^A = 1$;
+    \item $R^A =$ $<$$(-,-)$;
+    \item $f^A =$ sucessor$(-)$ e $g^A =$ soma$(-,-)$.
+\end{itemize}
+Podemos então formalizar sentenças sobre a estrutura $A$ na lógica de predicados:
+\begin{description}
+        \item[$2$ é menor que $3$.] $R(f(b), f(f(b)))$ 
+        \item[Para todo natural $x$, há um natural $y$ maior que ele.] $\forall x\exists y(R(x,y))$
+        \item[Para todo natural $x$, a soma entre $1$ e $x$ é igual ao sucessor de $x$.] $\forall x(g(b, x) = f(x))$ 
+        \item[0 não é sucessor de nenhum natural.] $\neg\exists x(f(x) = a)$    
+        \item[Para todo natural $x$, existem dois naturais cuja soma é $x$.] $\forall x\exists y\exists z(g(y,z) = x)$  
+\end{description}

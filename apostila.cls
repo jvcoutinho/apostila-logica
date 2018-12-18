@@ -14,6 +14,10 @@
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 
+\usetikzlibrary{positioning,arrows,calc}
+\tikzset{ modal/.style={>=stealth,shorten >=1pt,shorten <=1pt,auto, semithick}, world/.style={circle,draw,minimum size=0.5cm,fill=Emerald!15}, point/.style={circle,draw,inner sep=0.5mm,fill=black}, reflexive above/.style={->,loop,looseness=7,in=120,out=60}, reflexive below/.style={->,loop,looseness=7,in=240,out=300}, reflexive left/.style={->,loop,looseness=7,in=150,out=210}, reflexive right/.style={->,loop,looseness=7,in=30,out=330} }
+
+
 % Parte.
 \titleformat{\part}[display]
     {\scshape\centering\Huge} % Formato.
@@ -37,3 +41,29 @@
         {10pt}
         {}
         {}
+
+\newenvironment{definition}[1]
+        {
+            \vspace{10pt}
+            \begin{tcolorbox}[title=#1]
+        }
+        {
+            \end{tcolorbox}
+            \vspace{10pt}
+        }
+
+\newenvironment{structure}[5]
+        {
+            \vspace{10pt}
+            \begin{tikzpicture}[modal]
+                \node[world] (Dom) [label=above:\large #1] {#2};
+                \node[world] (R) [below left =of Dom,, align=left, label=above:Relações] {#3};
+                \node[world] (D) [below = of Dom, align=left, label=above:Destaques] {#4};
+                \node[world] (F) [below right=of Dom, align=left,label=above:Funções] {#5};
+            \end{tikzpicture} 
+             
+        }
+        {
+           
+            \vspace{10pt}
+        }
