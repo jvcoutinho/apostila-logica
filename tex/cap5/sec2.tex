@@ -1,0 +1,64 @@
+\section{Variáveis}
+
+Uma variável, como vimos, é a representação de um objeto do domínio. Dada uma fórmula $(Q x\omega)$, onde $Q$ é $\forall$ ou $\exists$, dizemos que o \textbf{escopo} do quantificador $Q x$ é $\omega$. Por exemplo, na fórmula a seguir:
+\[S(x) \lor \exists z(P(z) \land \forall x(R(x,y) \rightarrow \exists yR(y,x)))\]
+O escopo de $\exists z$ é $(P(z) \land \forall x(R(x,y) \rightarrow \exists yR(y,x))$, o de $\forall x$ é $(R(x,y) \rightarrow \exists yR(y,x))$ e o de $\exists y$ é apenas $R(y,x)$. 
+Uma ocorrência de uma variável em uma fórmula é dita \textbf{ligada} se, e somente se, a variável está dentro do escopo de um quantificador aplicado a ela ou ela é a ocorrência do quantificador. Uma ocorrência de uma variável em uma fórmula é dita \textbf{livre} se, e somente se, essa ocorrência não é ligada. 
+\begin{center}
+    $S({\color{Green}x}) \lor \exists {\color{Peach}z}(P({\color{Peach}z}) \land \forall {\color{Peach}x}(R({\color{Peach}x},{\color{Green}y}) \rightarrow \exists {\color{Peach}y}R({\color{Peach}y},{\color{Peach}x})))$
+\end{center}
+
+Assim, dizemos que uma variável é ligada em uma fórmula se há pelo menos uma ocorrência ligada dela na fórmula e, similarmente, uma variável é livre em uma fórmula se há pelo menos uma ocorrência livre dela na fórmula. Na fórmula anterior, $x$ e $y$ são variáveis {\color{Green}livres}, enquanto $x$, $y$ e $z$ são variáveis {\color{Peach}ligadas} (é possível que uma variável seja livre e ligada ao mesmo tempo em uma fórmula, mas em ocorrências diferentes).
+
+Podemos definir uma função recursiva que obtém o conjunto de variáveis livres em uma fórmula:
+\begin{definition}{Conjunto das variáveis livres em uma fórmula}
+    $VL: FORM \mapsto \mathcal{P}(\text{VARIÁVEIS})$ \\
+    $VL(\varphi) = \{x_1,...,x_n\}$, se $\varphi$ é atômica e $x_1,...,x_n$ ocorrem em $\varphi$ \\
+    $VL((\neg \psi)) = VL(\psi)$ \\
+    $VL((\rho \land \theta)) = VL(\rho) \cup VL(\theta)$ \\
+    $VL((\rho \lor \theta)) = VL(\rho) \cup VL(\theta)$ \\
+    $VL((\rho \rightarrow \theta)) = VL(\rho) \cup VL(\theta)$ \\
+    $VL((\forall x\omega)) = VL(\omega) - \{x\}$ \\
+    $VL((\exists x\omega)) = VL(\omega) - \{x\}$
+\end{definition}
+
+\subsection{Substituição de variáveis}
+
+Para atribuir um valor $t$ à uma variável livre $x$ em uma fórmula $\varphi$ (notação $\varphi[t\diagup x]$), devemos substituir todas as ocorrências livres dessa variável na fórmula por esse valor. Assim, queremos definir precisamente esse processo. Temos duas funções: uma aplicada a termos e uma aplicada a fórmulas.
+\begin{definition}{Substituição de uma variável $x$ por um termo $t$ em um termo $s$}
+    $s[t\diagup x]$$: \text{TERM} \times \text{TERM} \times \text{VARIÁVEIS} \mapsto \text{TERM}$ \\
+    $x[t\diagup x] = t$ \\
+    $y[t\diagup x] = y \text{, se } x \neq y$ \\
+    $c[t\diagup x] = c$ \\
+    $f(t_1,...,t_n)[t\diagup x] = f(t_1[t\diagup x],...,t_n[t\diagup x])$
+    \tcbsubtitle{Substituição de uma variável $x$ por um termo $t$ em uma fórmula $\varphi$} 
+    $\varphi[t\diagup x]$$: \text{FORM} \times \text{TERM} \times \text{VARIÁVEIS} \mapsto \text{FORM}$ \\
+    $R(t_1,...,t_n)[t\diagup x] = R(t_1[t\diagup x],...,t_n[t\diagup x])$ \\
+    $(t_1 = t_2)[t\diagup x] = (t_1[t\diagup x] = t_2[t\diagup x])$ \\
+    $(\neg \psi)[t\diagup x] = (\neg \psi[t\diagup x])$ \\
+    $(\rho \land \theta)[t\diagup x] = (\rho[t\diagup x] \land \theta[t\diagup x])$ \\
+    $(\rho \lor \theta)[t\diagup x] = (\rho[t\diagup x] \lor \theta[t\diagup x])$ \\
+    $(\rho \rightarrow \theta)[t\diagup x] = (\rho[t\diagup x] \rightarrow \theta[t\diagup x])$ \\
+    $(\forall x \omega)[t\diagup x] = (\forall x \omega)$ \\
+    $(\forall y \omega)[t\diagup x] = (\forall y \omega[t\diagup x])$, se $x \neq y$ \\
+    $(\exists x \omega)[t\diagup x] = (\exists x \omega)$ \\
+    $(\exists y \omega)[t\diagup x] = (\exists y \omega[t\diagup x])$, se $x \neq y$
+\end{definition}
+
+A função de substituição explora recursivamente a fórmula até encontrar uma ocorrência livre da variável a ser substituída, e então a substitui -- isso implica que ocorrências ligadas da variável são ignoradas.
+
+Porém, há uma condição especial para substituição que devemos considerar. Observe a seguinte fórmula $\varphi$:
+\[\forall x(x = y)\]
+Suponha que $A$ seja uma estrutura com mais de um elemento em seu domínio. Isso significa que, para qualquer valor $a$ que atribuirmos a $y$, a fórmula não diz a verdade nessa estrutura pois nem todo elemento de $A$ é $a^A$. Isso implica (veremos com mais detalhes no próximo capítulo), que a fórmula $\varphi$ não é \textbf{válida}. Porém, ao substituirmos $y$ pela variável $x$, temos:
+\[\forall x(x = x)\]
+Nesse caso, a fórmula sempre diz a verdade, independemente da estrutura analisada, pois qualquer elemento em qualquer estrutura é igual a ele mesmo. Desse modo, a substituição causou uma fórmula não válida se tornar válida, e isso não deve acontecer. Desse modo, não devemos realizar substituições de um termo $t$ em uma variável $x$ que \textbf{causariam ocorrências livres de uma variável em $t$ se tornarem ligadas após a substituição}. Temos então, a noção de \textbf{termo livre}.
+\begin{definition}{Termo livre}
+    Dizemos que um termo $t$ está livre para entrar no lugar da variável $x$ em uma fórmula $\varphi$ se:
+    \begin{itemize}
+        \item $\varphi$ é atômica;
+        \item $\varphi$ é da forma $(\neg \psi)$ e $t$ está livre para entrar no lugar de $x$ em $\psi$;
+        \item $\varphi$ é da forma $(\rho * \theta)$, $t$ está livre para entrar no lugar de $x$ em $\rho$ e em $\theta$ e $* \in \{\land, \lor, \rightarrow\}$;
+        \item $\varphi$ é da forma $(\forall y\omega)$ ou $(\exists y\omega)$, $x = y$ ou $x \neq y$ e $x \notin VL(t)$, e $t$ está livre para entrar no lugar de $x$ em $\omega$.
+    \end{itemize}
+\end{definition}
+Assim, executamos essa função antes de proceder com a função de substituição. Na fórmula $\forall x(x = y)$, não podemos realizar a substituição $[x\diagup y]$ pois $x \neq y$, mas $x \in VL(x)$.

@@ -19,3 +19,20 @@ A unidade básica de uma fórmula é a \textbf{fórmula atômica}, que é uma re
     \end{itemize} 
     Uma fórmula atômica que não contém variáveis é dita \textbf{sentença atômica}.
 \end{definition}
+
+E assim, podemos definir indutivamente o conjunto das expressões legítimas da lógica de predicados, chamado de conjunto das \textbf{fórmulas bem formadas} ($FORM$).
+\begin{definition}{Fórmula bem formada}
+    \begin{itemize}
+        \item Toda fórmula atômica é uma fórmula bem formada;
+        \item Se $\omega$ é uma fórmula bem formada, então $(\neg \omega)$ é uma fórmula bem formada;
+        \item Se $\omega_1$ e $\omega_2$ são fórmulas bem formadas, então $(\omega_1 \land \omega_2)$ é uma fórmula bem formada.
+        \item Se $\omega_1$ e $\omega_2$ são fórmulas bem formadas, então $(\omega_1 \lor \omega_2)$ é uma fórmula bem formada.
+        \item Se $\omega_1$ e $\omega_2$ são fórmulas bem formadas, então $(\omega_1 \rightarrow \omega_2)$ é uma fórmula bem formada.
+        \item Se $\omega$ é uma fórmula bem formada e $x$ é uma variável livre em $\omega$, então $(\forall x\omega)$ é uma fórmula bem formada;
+        \item Se $\omega$ é uma fórmula bem formada e $x$ é uma variável livre em $\omega$, então $(\exists x\omega)$ é uma fórmula bem formada.
+    \end{itemize}
+
+    Uma fórmula que não contém variáveis livres é dita \textbf{sentença}.
+\end{definition}
+
+Veremos a definição de variável livre a seguir. Temos então que $FORM$ é o fecho indutivo do conjunto base $X$ de fórmulas atômicas sob o conjunto de funções geradoras $F = \{f_\forall, f_\exists, f_\neg, f_\lor, f_\land, f_\rightarrow\}$, e é possível mostrar que, da forma como definimos, $FORM$ é livremente gerado.
