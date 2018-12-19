@@ -39,7 +39,7 @@ Para ilustrar esse conceito, tomemos duas estruturas $A$ e $B$:
 
 Suponha que:
 \begin{description}
-    \item $R_1 = \{(0,3), (1,3), (3,5), (5, 3)\}$ \quad|\quad $R_3 = \{(0,3), (1,2), (3,5), (2, 3), (3,2)\}$
+    \item $R_1 = \{(0,3), (1,3), (3,5), (5, 3)\}$ \quad|\quad $R_3 = \{(0,3), (1,2), (3,5), (2, 3), (3,2), (3,3)\}$
     \item $R_2 = \{0,1,5\}$ \quad|\quad $R_4 = \{0,1,2,3,5\}$
     \item $f(0) = 1, f(1) = 1, f(3) = 2, f(5) = 3$ \quad|\quad $g(0) = 0, g(1) = 1, g(2) = 2, g(3) = 3, g(5) = 5$
 \end{description}
@@ -72,6 +72,102 @@ $h$ é um homomorfismo de $A$ para $B$? Vamos verificar cada condição:
         $h(f(5)) = g(h(5)) = g(3) = 3$
     \end{center}
     Assim, a 3ª condição é satisfeita e dizemos que $h$ \textbf{preserva funções}. Por preservar destaques, relações e funções, $h$ é um homomorfismo de $A$ para $B$.
-     
-
 \end{enumerate}
+     
+\subsection{Imersão}
+Um homomorfismo $h: dom(A) \rightarrow dom(B)$ é dito \textbf{imersão} se:
+\begin{itemize}
+    \item $h$ é injetora;
+    \item $h$ satisfaz uma versão mais forte da 2ª condição:
+    \\ Para todo símbolo de relação $n$-ária $R$ de $L$ e toda $n$-upla $(a_1,...,a_n)$ de elementos de $A$, $(a_1,...a_n) \in R^A \leftrightarrow (h(a_1),...,h(a_n)) \in R^B$.
+\end{itemize}
+A função $h$ do exemplo anterior não é uma imersão, uma vez que, não só ela quebra a primeira condição (pois $h(0) = h(1) = 1$, implicando que $h$ não é injetora) como a segunda ($(5,5) \notin R_1$, mas $(h(5),h(5)) = (3,3) \in R_2$).
+Além da imersão, existem outras variantes para o homomorfismo:
+\begin{itemize}
+    \item Uma imersão sobrejetora é dita \textbf{isomorfismo}.
+    \item Um homomorfismo $h: dom(A) \mapsto dom(A)$ é dito \textbf{endomorfismo} de $A$.
+    \item Um isomorfismo $h: dom(A) \mapsto dom(A)$ é dito \textbf{automorfismo} de $A$.
+\end{itemize}
+
+Agora, podemos remeter ao problema inicial e definir então as condições para que uma estrutura $A$ seja subestrutura de uma estrutura $B$.
+\begin{definition}{Subestrutura}
+    Sejam $A$ e $B$ estruturas de mesma assinatura. Dizemos que $A$ é subestrutura de $B$ se:
+    \begin{enumerate}
+        \item $dom(A) \subseteq dom(B)$
+        \item A função identidade $i: dom(A) \mapsto dom(B)$ $|$ $i(x) = x$ é uma imersão.
+    \end{enumerate}
+    A notação é $A \subseteq B$.
+\end{definition}
+
+\subsection{O Problema da Menor Subestrutura}
+
+Seja $A$ a estrutura a seguir e $X = \{0,1,3\}$ um subconjunto do domínio de $A$:
+\begin{center}
+    \begin{structure}
+        {}
+        {$0$ $1$ $2$ $3$ $4$ $5$}
+        {primo$(-)$\\$<$$(-,-)$}
+        {$1$ $2$}
+        {quadrado-mod-5$(-)$\\soma-mod-5$(-,-)$}
+    \end{structure} 
+\end{center}
+
+Queremos construir uma subestrutura de $A$ que contenha o menor número de elementos em seu domínio e que contenha $X$. Estamos diante de um problema de otimização:
+
+\begin{description}
+    \item[Dada:] uma $L$-Estrutura $A$ e um conjunto $X \subseteq dom(A)$;
+    \item[Pergunta-se:] qual a menor subestrutura $B$ de $A$ que contém $X$, ou seja, $B \subseteq A$ e $X \subseteq dom(B)$?   
+\end{description}
+A notação que usamos para $B$ é $\langle X \rangle_A$. Assim, $B$ deve conter os mesmos destaques, relações e funções que $A$ e deve conter $X$ em seu domínio. Além disso, precisamos adicionar elementos ao domínio de $B$ para que a definição de estrutura se mantenha consistente. 
+
+Inicialmente, temos a seguinte estrutura:
+\begin{center}
+    \begin{structure}
+        {}
+        {$0$ $1$ $3$}
+        {primo$(-)$\\$<$$(-,-)$}
+        {$1$ $2$}
+        {quadrado-mod-5$(-)$\\soma-mod-5$(-,-)$}
+    \end{structure} 
+\end{center}
+
+Note que ela possui o destaque $2$, que não pertence ao domínio. Por definição, o conjunto de destaques é subconjunto do domínio, logo, devemos adicionar o elemento ao domínio:
+\begin{center}
+    \begin{tikzpicture}[modal]
+        \node[world] (Dom) [align=left] {$0$ $1$ $2$ $3$};
+    \end{tikzpicture} 
+\end{center}
+
+Note também que a função quadrado-mod-5 aplicada a $3$ retorna $4$, que não é um elemento do domínio. Por definição, o domínio é fechado sob as funções, assim, devemos adicionar $4$ ao domínio:
+
+\begin{center}
+    \begin{tikzpicture}[modal]
+        \node[world] (Dom) [align=left] {$0$ $1$ $2$ $3$ $4$};
+    \end{tikzpicture} 
+\end{center}
+
+Dessa forma, $\langle X \rangle_A$ é a estrutura com domínio $\{0,1,2,3,4\}$ e com os mesmos destaques, relações e funções que $A$. 
+
+Podemos sintetizar o procedimento para construir $\langle X \rangle_A$ da seguinte forma:
+\begin{enumerate}
+    \item Inicialmente, adicionamos os destaques, funções e relações de $A$ e fazemos $dom(B) = X$.
+    \item Adicione os destaques de $B$ ao domínio de $B$.
+    \item Adicione os conjuntos imagens das funções de $B$ ao domínio de $B$.  
+\end{enumerate}
+
+\subsection{Extensão de uma estrutura}
+
+Quando $\langle \emptyset \rangle_A = A$, ou seja, a menor subestrutura de $A$ construída a partir do conjunto vazio como domínio é a própria $A$, todos os elementos de $A$ são alcançáveis a partir dos destaques e funções de $A$.
+
+Isso não é verdade na estrutura do exemplo anterior, uma vez que $5$ é um elemento inalcançável a partir dos destaques e funções disponíveis e é considerado ``sem nome'' (é impossível representar 5 por meio de símbolos sobre essa estrutura). Dessa forma, podemos extender a estrutura $A$, adicionando ao seu conjunto de destaques os elementos inacessíveis de $A$. A estrutura resultante $A'$ é chamada de \textbf{extensão} de $A$ (e $A$ é dita \textbf{reduto} de $A'$).
+    
+A extensão da estrutura do exemplo anterior é, portanto:
+\begin{center}
+    \begin{structure}
+        {}
+        {$0$ $1$ $2$ $3$ $4$ $5$}
+        {primo$(-)$\\$<$$(-,-)$}
+        {$1$ $2$ $5$}
+        {quadrado-mod-5$(-)$\\soma-mod-5$(-,-)$}
+    \end{structure} 
+\end{center}
