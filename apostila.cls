@@ -53,6 +53,14 @@
         {}
         {}
 
+% Subseção
+\titleformat{\subsection}
+        {\scshape\large}
+        {\thesubsection}
+        {10pt}
+        {}
+        {}
+
 \newenvironment{definition}[1]
         {
             \vspace{10pt}
