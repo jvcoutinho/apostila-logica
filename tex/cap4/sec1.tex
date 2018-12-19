@@ -82,11 +82,7 @@ Um homomorfismo $h: dom(A) \rightarrow dom(B)$ é dito \textbf{imersão} se:
     \\ Para todo símbolo de relação $n$-ária $R$ de $L$ e toda $n$-upla $(a_1,...,a_n)$ de elementos de $A$, $(a_1,...a_n) \in R^A \leftrightarrow (h(a_1),...,h(a_n)) \in R^B$.
 \end{itemize}
 A função $h$ do exemplo anterior não é uma imersão, uma vez que, não só ela quebra a primeira condição (pois $h(0) = h(1) = 1$, implicando que $h$ não é injetora) como a segunda ($(5,5) \notin R_1$, mas $(h(5),h(5)) = (3,3) \in R_2$).
-<<<<<<< HEAD
 Além da imersão, existem outras variantes do homomorfismo:
-=======
-Além da imersão, existem outras variantes para o homomorfismo:
->>>>>>> 577f0e6b92bc77b1677a65462ddcc92c8313823c
 \begin{itemize}
     \item Uma imersão sobrejetora é dita \textbf{isomorfismo}.
     \item Um homomorfismo $h: dom(A) \mapsto dom(A)$ é dito \textbf{endomorfismo} de $A$.
@@ -135,11 +131,7 @@ Inicialmente, temos a seguinte estrutura:
     \end{structure} 
 \end{center}
 
-<<<<<<< HEAD
 Note que ela possui o destaque $2$, que não pertence ao domínio. Por definição, o conjunto de destaques é subconjunto do domínio, logo, devemos adicioná-lo a este:
-=======
-Note que ela possui o destaque $2$, que não pertence ao domínio. Por definição, o conjunto de destaques é subconjunto do domínio, logo, devemos adicionar o elemento ao domínio:
->>>>>>> 577f0e6b92bc77b1677a65462ddcc92c8313823c
 \begin{center}
     \begin{tikzpicture}[modal]
         \node[world] (Dom) [align=left] {$0$ $1$ $2$ $3$};
@@ -158,18 +150,12 @@ Dessa forma, $\langle X \rangle_A$ é a estrutura com domínio $\{0,1,2,3,4\}$ e
 
 Podemos sintetizar o procedimento para construir $\langle X \rangle_A$ da seguinte forma:
 \begin{enumerate}
-<<<<<<< HEAD
-    \item Inicialmente, adicione os destaques, funções e relações de $A$ e faça $dom(B) = X$.
+    \item Inicialmente, adicione os destaques, funções e relações de $A$ em $B$ e faça $dom(B) = X$.
     \item Adicione os destaques de $B$ ao domínio de $B$.
     \item Repita até que nenhum elemento novo seja adicionado:
     \begin{enumerate}
-        \item Adicione os conjuntos imagens das funções de $B$ ao domínio de $B$.
+        \item[3.1] Adicione os conjuntos imagens das funções de $B$ ao domínio de $B$.
     \end{enumerate}  
-=======
-    \item Inicialmente, adicionamos os destaques, funções e relações de $A$ e fazemos $dom(B) = X$.
-    \item Adicione os destaques de $B$ ao domínio de $B$.
-    \item Adicione os conjuntos imagens das funções de $B$ ao domínio de $B$.  
->>>>>>> 577f0e6b92bc77b1677a65462ddcc92c8313823c
 \end{enumerate}
 
 \subsection{Extensão de uma estrutura}
