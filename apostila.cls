@@ -67,8 +67,8 @@
         {
             \vspace{10pt}
             \begin{tikzpicture}[modal]
-                \node[world] (Dom) [label=above:\large #1] {#2};
-                \node[world] (R) [below left =of Dom,, align=left, label=above:Relações] {#3};
+                \node[world] (Dom) [label=above:\large #1, align=left] {#2};
+                \node[world] (R) [below left =of Dom, align=left, label=above:Relações] {#3};
                 \node[world] (D) [below = of Dom, align=left, label=above:Destaques] {#4};
                 \node[world] (F) [below right=of Dom, align=left,label=above:Funções] {#5};
             \end{tikzpicture} 

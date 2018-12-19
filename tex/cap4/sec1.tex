@@ -1,0 +1,77 @@
+\section{Subestruturas}
+
+Como saber se uma estrutura $A$ é subestrutura de uma estrutura $B$? Se $A$ e $B$ forem simplesmente conjuntos, basta saber se todos os elementos de $A$ também são elementos de $B$. Mas, considerando os outros componentes das estruturas $A$ e $B$ (relações, destaques e funções), é necessário verificar se esses componentes possuem uma relação entre si que justifique dizer que $A$ está contida em $B$ como estrutura.
+
+Para definir matematicamente esse possível relacionamento, tomamos emprestado da álgebra a noção de \textbf{homomorfismo}: uma função que preserva propriedades.
+
+\begin{definition}{Homomorfismo}
+    Sejam $A$ e $B$ estruturas de uma mesma assinatura $L$. Uma função $h: dom(A) \mapsto dom(B)$ é dita homomorfismo de $A$ para $B$ se as condições seguintes forem satisfeitas.
+    \begin{enumerate}
+        \item Para todo símbolo de constante $c$ de $L$, $h(c^A) = c^B$;
+        \item Para todo símbolo de relação $n$-ária $R$ de $L$ e toda $n$-upla $(a_1,...,a_n)$ de elementos de $A$, $(a_1,...a_n) \in R^A \rightarrow (h(a_1),...,h(a_n)) \in R^B$;
+        \item Para todo símbolo de função $n$-ária $f$ de $L$ e toda $n$-upla $(a_1,...,a_n)$ de elementos de $A$, $h(f^A(a_1,...a_n)) = f^B(h(a_1),...,h(a_n))$.  
+    \end{enumerate}
+\end{definition}
+
+Para ilustrar esse conceito, tomemos duas estruturas $A$ e $B$:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c c}
+        $\mathbf{A}$ & $\mathbf{B}$ \\
+        \begin{structure}
+            {}
+            {$0$ $1$ $3$ $5$}
+            {$R_1(-,-)$\\$R_2(-)$}
+            {$1$ $3$}
+            {$f(-)$}
+        \end{structure}
+        &
+        \begin{structure}
+            {}
+            {$0$ $1$ $2$ $3$ $5$}
+            {$R_3(-,-)$\\$R_4(-)$}
+            {$1$ $2$}
+            {$g(-)$}
+        \end{structure} 
+    \end{tabular}
+\end{table}
+
+Suponha que:
+\begin{description}
+    \item $R_1 = \{(0,3), (1,3), (3,5), (5, 3)\}$ \quad|\quad $R_3 = \{(0,3), (1,2), (3,5), (2, 3), (3,2)\}$
+    \item $R_2 = \{0,1,5\}$ \quad|\quad $R_4 = \{0,1,2,3,5\}$
+    \item $f(0) = 1, f(1) = 1, f(3) = 2, f(5) = 3$ \quad|\quad $g(0) = 0, g(1) = 1, g(2) = 2, g(3) = 3, g(5) = 5$
+\end{description}
+Seja $h: dom(A) \mapsto dom(B)$ uma função entre as duas estruturas, definida da seguinte forma:
+\begin{center}
+    $h(0) = 1$ \\
+    $h(1) = 1$ \\
+    $h(3) = 2$ \\
+    $h(5) = 3$
+\end{center}
+$h$ é um homomorfismo de $A$ para $B$? Vamos verificar cada condição:
+\begin{enumerate}
+    \item A 1ª condição diz que os destaques de $A$ são mapeados para destaques de $B$. Notamos que $h(1) = 1$ e $h(3) = 2$. Assim, a 1ª condição é satisfeita e dizemos que $h$ \textbf{preserva destaques}.
+    \item A 2ª condição diz que se uma tupla de elementos se relacionam em $A$, então os mapeamentos desses elementos se relacionam em $B$. Analisando as relações:
+    \begin{description}
+        \item[$R_1$:] $(0,3) \mapsto (h(0),h(3)) = (1,2) \in R_3$\\
+        $(1,3) \mapsto (h(1),h(3)) = (1,2) \in R_3$ \\
+        $(3,5) \mapsto (h(3),h(5)) = (2,3) \in R_3$ \\
+        $(5,3) \mapsto (h(5),h(3)) = (3,2) \in R_3$
+        \item[$R_2$:] $0 \mapsto h(0) = 1 \in R_4$ \\
+        $1 \mapsto h(1) = 1 \in R_4$ \\
+        $5 \mapsto h(5) = 3 \in R_4$
+    \end{description}
+    Assim, a 2ª condição é satisfeita e dizemos que $h$ \textbf{preserva relações}.
+    \item A 3ª condição diz que mapear a aplicação de uma função em $A$ corresponde a mapear primeiro os argumentos e depois aplicar uma função em $B$. Analisando as funções:
+    \begin{center}
+        $h(f(0)) = g(h(0)) = g(1) = 1$ \\
+        $h(f(1)) = g(h(1)) = g(1) = 1$ \\
+        $h(f(3)) = g(h(3)) = g(2) = 2$ \\
+        $h(f(5)) = g(h(5)) = g(3) = 3$
+    \end{center}
+    Assim, a 3ª condição é satisfeita e dizemos que $h$ \textbf{preserva funções}. Por preservar destaques, relações e funções, $h$ é um homomorfismo de $A$ para $B$.
+     
+
+\end{enumerate}
