@@ -1,0 +1,21 @@
+\section{Fórmulas}
+
+Assim como as expressões legítimas da lógica proposicional são chamadas proposições, as expressões legítimas da lógica de primeira ordem são chamadas \textbf{fórmulas}.
+
+A unidade básica de uma fórmula é a \textbf{fórmula atômica}, que é uma relação entre objetos. Para representar objetos, tomamos o conceito de \textbf{termos}.
+\begin{definition}{Termos}
+    Seja $L$ uma linguagem. O conjunto de termos de $L$ é definido indutivamente da seguinte forma:
+    \begin{itemize}
+        \item Todo símbolo de constante $c$ de $L$ é um termo;
+        \item Toda variável é um termo;
+        \item Se $f$ for um símbolo de função $n$-ária de $L$ e se $t_1,...,t_n$ forem termos de $L$, então $f(t_1,...,t_n)$ é um termo. 
+    \end{itemize}
+    Um termo que não contém variáveis é dito \textbf{termo fechado}.
+    \tcbsubtitle{Fórmulas Atômicas}
+    Seja $L$ uma linguagem. Uma fórmula atômica é uma palavra sobre o vocabulário simbólico de $L$ com um dos dois formatos:
+    \begin{itemize}
+        \item $R(t_1,...t_n)$, onde $R$ é um símbolo de relação $n$-ária de $L$ e $t_1,...,t_n$ são termos de $L$;
+        \item $t_1 = t_2$, onde $t_1$ e $t_2$ são termos de $L$.
+    \end{itemize} 
+    Uma fórmula atômica que não contém variáveis é dita \textbf{sentença atômica}.
+\end{definition}
