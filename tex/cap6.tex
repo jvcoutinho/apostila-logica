@@ -1,1 +1,50 @@
 \chapter{Semântica}
+
+O matemático Alfred Tarski definiu pioneiramente uma maneira de definir quando uma sentença é verdadeira em uma estrutura, conhecida como a noção de verdade em um ``modelo de Tarski'' (ou por meio de uma metalinguagem).
+
+\begin{definition}{Valor-verdade de uma sentença}
+    Seja $L$ uma assinatura, $A$ uma $L$-Estrutura e $*^A$ uma interpretação dos símbolos de $L$ em $A$. O valor-verdade de uma sentença $\varphi$ de $L$ é definida indutivamente da seguinte forma:
+    \begin{itemize}
+        \item $R(t_1,...,t_n)^A$ é verdadeira se, e somente se, $(t_1^A,...,t_n^A) \in R^A$
+        \item $(t_1 = t_2)^A$ é verdadeira se, e somente se, $t_1^A$ for o mesmo elemento que $t_2^A$
+        \item $(\neg \psi)^A$ é verdadeira se, e somente se, $\psi^A$ for falsa
+        \item $(\rho \land \theta)^A$ é verdadeira se, e somente se, $\rho^A$ for verdadeira e $\theta^A$ for verdadeira
+        \item $(\rho \lor \theta)^A$ é verdadeira se, e somente se, $\rho^A$ for verdadeira ou $\theta^A$ for verdadeira
+        \item $(\rho \rightarrow \theta)^A$ é verdadeira se, e somente se, $\rho^A$ for falsa ou $\theta^A$ for verdadeira
+        \item $(\forall x \omega)^A$ é verdadeira se, e somente se, $\omega^A$ for verdadeira para todo valor de $x$
+        \item $(\exists x \omega)^A$ é verdadeira se, e somente se, $\omega^A$ for verdadeira para algum valor de $x$
+    \end{itemize}
+    Se $\varphi^A$ for verdadeira, dizemos que $A$ satisfaz $\varphi$ sob a interpretação $*^A$.
+
+    \tcbsubtitle{Satisfatibilidade de uma sentença}
+    Seja $\varphi$ uma sentença sobre uma assinatura $L$.
+    \begin{itemize}
+        \item $\varphi$ é \textbf{satisfatível} se existe uma $L$-Estrutura $A$ que satisfaz $\varphi$ sob alguma interpretação de $L$ em $A$.
+        \item $\varphi$ é \textbf{refutável} se existe uma $L$-Estrutura $A$ que não satisfaz $\varphi$ sob alguma interpretação de $L$ em $A$.
+        \item $\varphi$ é \textbf{válida} se toda $L$-Estrutura $A$ satisfaz $\varphi$ sob toda interpretação de $L$ em $A$.
+        \item $\varphi$ é \textbf{insatisfatível} se toda $L$-Estrutura $A$ não satisfaz $\varphi$ sob toda interpretação de $L$ em $A$.
+    \end{itemize}
+
+    Seja $\Gamma$ um conjunto de sentenças sobre $L$.
+    \begin{itemize}
+        \item $\Gamma$ é \textbf{satisfatível} se existe uma $L$-Estrutura $A$ que satisfaz todas as sentenças de $\Gamma$ sob alguma interpretação de $L$ em $A$.
+        \item $\varphi$ é \textbf{consequência lógica} de $\Gamma$ se toda $L$-Estrutura $A$ que satisfaz $\Gamma$ também satisfaz $\varphi$ sob toda interpretação de $L$ em $A$. 
+    \end{itemize}
+
+    Seja $\psi$ uma sentença sobre uma assinatura $L$.
+    \begin{itemize}
+        \item $\varphi$ e $\psi$ são \textbf{logicamente equivalentes} se, para toda $L$-Estrutura $A$, $A$ satisfaz $\psi$ se, e somente se, $A$ satisfaz $\psi$ para toda interpretação de $L$ em $A$.
+    \end{itemize}
+\end{definition}
+
+E para o caso de fórmulas com ocorrências de variáveis livres? Nesse caso, devemos primeiro substituir essas variáveis por termos fechados de uma assinatura.
+
+\begin{definition}{Satisfatibilidade de uma fórmula}
+    Seja $\varphi$ uma fórmula sobre uma assinatura $L$, na qual ocorrem livremente as variáveis $x_1,...,x_n$.
+    \begin{itemize}
+        \item $\varphi$ é \textbf{satisfatível} se existe uma $L$-Estrutura $A$ e termos $a_1,...,a_n$ de $L$ tal que $A$ satisfaz $\varphi[a_1\diagup x_1,...,a_n\diagup x_n]$ sob alguma interpretação de $L$ em $A$.
+        \item $\varphi$ é \textbf{refutável} se existe uma $L$-Estrutura $A$ e termos $a_1,...,a_n$ de $L$ tal que $A$ não satisfaz $\varphi[a_1\diagup x_1,...,a_n\diagup x_n]$ sob alguma interpretação de $L$ em $A$.
+        \item $\varphi$ é \textbf{válida} se, para toda $L$-Estrutura $A$ e toda $n$-upla de termos $a_1,...,a_n$, $A$ satisfaz $\varphi[a_1\diagup x_1,...,a_n\diagup x_n]$ sob toda interpretação de $L$ em $A$.
+        \item $\varphi$ é \textbf{insatisfatível}  se, para toda $L$-Estrutura $A$ e toda $n$-upla de termos $a_1,...,a_n$, $A$ não satisfaz $\varphi[a_1\diagup x_1,...,a_n\diagup x_n]$ sob toda interpretação de $L$ em $A$.
+    \end{itemize}
+\end{definition}
