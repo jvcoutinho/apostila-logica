@@ -1,0 +1,25 @@
+\section{Modelos}
+
+Seja $L$ uma assinatura, $A$ uma $L$-Estrutura e $\varphi$ uma sentença de $L$. Dizemos que $A$ é \textbf{modelo} para $\varphi$ se existe uma interpretação de $L$ em $A$ tal que $\varphi^A$ seja verdadeira. Similarmente, dizemos que $A$ é \textbf{contramodelo} para $\varphi$ se existe uma interpretação de $L$ em $A$ tal que $\varphi^A$ seja falsa.
+
+Para ilustrá-los, tome a estrutura $B$ a seguir:
+\begin{center}
+    \begin{structure}
+        {}
+        {$0$ $1$ $2$}
+        {menor-que$(-,-)$\\divide$(-,-)$}
+        {$0$\\$2$}
+        {quadrado-mod-3$(-)$\\soma-mod-3$(-,-)$}
+    \end{structure}
+\end{center}
+
+A assinatura $L$ de $B$ pode ser definida como:
+\begin{itemize}
+    \item 2 símbolos de destaques: $a$ e $b$;
+    \item 2 símbolo de relação binária: $R$ e $S$;
+    \item 1 símbolo de função unária: $f$;
+    \item 1 símbolo de função binária: $g$.
+\end{itemize}
+Ao tomarmos a sentença $\varphi$ abaixo:
+\[\varphi = \exists x\forall y(R(x,y))\]
+Notamos que a interpretação $R^B =$ menor-que$(-,-)$ torna $\varphi$ falsa em $B$, uma vez que não há um elemento de $B$ que seja menor que 0, 1 e 2. Desse modo, deduzimos que $B$ é contramodelo para $\varphi$. Porém, a interpretação $R^B =$ divide$(-,-)$ torna $\varphi$ verdadeira em $B$, uma vez que 1 divide 0, 1 e 2. Assim, $B$ também é modelo para $\varphi$.
