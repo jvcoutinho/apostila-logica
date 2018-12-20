@@ -23,3 +23,28 @@ A assinatura $L$ de $B$ pode ser definida como:
 Ao tomarmos a sentença $\varphi$ abaixo:
 \[\varphi = \exists x\forall y(R(x,y))\]
 Notamos que a interpretação $R^B =$ menor-que$(-,-)$ torna $\varphi$ falsa em $B$, uma vez que não há um elemento de $B$ que seja menor que 0, 1 e 2. Desse modo, deduzimos que $B$ é contramodelo para $\varphi$. Porém, a interpretação $R^B =$ divide$(-,-)$ torna $\varphi$ verdadeira em $B$, uma vez que 1 divide 0, 1 e 2. Assim, $B$ também é modelo para $\varphi$.
+
+Usando as definições de modelo e contramodelo, podemos então definir os processos de criar um conjunto de sentenças atômicas a partir de uma estrutura de modo a descrevê-la; e de criar uma estrutura a partir de um conjunto de sentenças atômicas de modo a satisfazê-lo. 
+
+\subsection{Diagrama Positivo}
+Suponha que queremos reunir as sentenças atômicas que são verdadeiras na estrutura $B$ sob alguma interpretação de $L$ em $B$. Vamos tomar a interpretação a seguir como base:
+\begin{itemize}
+    \item $a^A = 0$ e $b^A = 2$;
+    \item $R^A =$ menor-que$(-,-)$ e $S^A =$ divide$(-,-)$;
+    \item $f^A =$ quadrado-mod-3$(-)$ e $g^A =$ soma-mod-3$(-,-)$.
+\end{itemize}
+E então, podemos reunir as seguintes sentenças atômicas que são verdadeiras em $B$ sob essa interpretação: $R(a,b)$, $R(a, f(b))$, $R(f(b), b)$, $R(g(a,a), b)$, $R(g(a,a), f(b))$, $S(f(b), a)$, $S(f(b), b)$, $S(b, a)$, $S(f(b),f(b))$, $S(b,b)$, $a = g(a,a)$, $b = g(f(b),f(b))$, $f(b) = g(b,b)$, $a = f(a)$, $b = g(b, a)$...
+
+O conjunto que inclui todas essas sentenças, além das outras sentenças verdadeiras em $B$ sob essa interpretação ou outras é chamado \textbf{diagrama positivo} de $B$.
+\begin{definition}{Diagrama positivo}
+    Seja $L$ uma assinatura e $A$ uma $L$-Estrutura. O conjunto de todas as sentenças atômicas sobre $L$ que são verdadeiras em $A$, ou seja, para as quais $A$ é modelo, é dito diagrama positivo de $A$ (notação $diag^+(A)$).
+
+    Caso $\langle \emptyset\rangle_A \neq A$, usamos a extensão de $A$ para gerar o diagrama positivo.
+    \tcbsubtitle{Construção do diagrama positivo}
+    O processo de construção do diagrama positivo de uma estrutura $A$ se dá da seguinte forma:
+    \begin{enumerate}
+        \item Inclua todos os elementos inalcançáveis do domínio de $A$ como destaques em $A$.
+        \item Para todo símbolo de relação $n$-ária de $L$ e termos $t_1,...,t_n$, inclua $R(t_1,...,t_n)$ se $t_1^A,...,t_n^A \in R^A$.
+        \item Para todo símbolo de função $n$-ária de $L$ e termos $t_1,...,t_n,t_{n+1}$, inclua $f(t_1,...,t_n) = t_{n+1}$ se $f^A(t_1^A,...,t_n^A)$ for o mesmo elemento que $t_{n+1}^A$.
+    \end{enumerate}
+\end{definition}

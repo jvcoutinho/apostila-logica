@@ -51,7 +51,7 @@ Porém, há uma condição especial para substituição que devemos considerar. 
 \[\forall x(x = y)\]
 Suponha que $A$ seja uma estrutura com mais de um elemento em seu domínio. Isso significa que, para qualquer valor $a$ que atribuirmos a $y$, a fórmula não diz a verdade nessa estrutura pois nem todo elemento de $A$ é $a^A$. Isso implica (veremos com mais detalhes no próximo capítulo), que a fórmula $\varphi$ não é \textbf{válida}. Porém, ao substituirmos $y$ pela variável $x$, temos:
 \[\forall x(x = x)\]
-Nesse caso, a fórmula sempre diz a verdade, independemente da estrutura analisada, pois qualquer elemento em qualquer estrutura é igual a ele mesmo. Desse modo, a substituição causou uma fórmula não válida se tornar válida, e isso não deve acontecer. Desse modo, não devemos realizar substituições de um termo $t$ em uma variável $x$ que \textbf{causariam ocorrências livres de uma variável em $t$ se tornarem ligadas após a substituição}. Temos então, a noção de \textbf{termo livre}.
+Nesse caso, a fórmula sempre diz a verdade, independemente da estrutura analisada, pois qualquer elemento em qualquer estrutura é igual a ele mesmo. Desse modo, a substituição causou uma fórmula não válida se tornar válida, e isso não deve acontecer. Assim, não devemos realizar substituições de um termo $t$ em uma variável $x$ que \textbf{causariam ocorrências livres de uma variável em $t$ se tornarem ligadas após a substituição}. Temos então, a noção de \textbf{termo livre}.
 \begin{definition}{Termo livre}
     Dizemos que um termo $t$ está livre para entrar no lugar da variável $x$ em uma fórmula $\varphi$ se:
     \begin{itemize}
