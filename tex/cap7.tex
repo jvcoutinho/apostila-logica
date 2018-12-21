@@ -1,1 +1,8 @@
 \chapter{Problema da Satisfatibilidade}
+
+\begin{description}
+    \item[Dada:] uma fórmula $\varphi$;
+    \item[Pergunta-se:] $\varphi$ é satisfatível? 
+\end{description}
+
+Retomamos o Problema da Satisfatibilidade (SAT) visto no capítulo 3, mas dessa vez adaptado para a lógica de primeira ordem. Diferentemente da lógica proposicional, porém, uma fórmula será satisfatível se houver uma interpretação em alguma estrutura que satisfaça a fórmula, ao invés de uma valoração-verdade sobre as variáveis de uma proposição. Isso significa que o procedimento de força-bruta de avaliar se uma fórmula é válida (tautologia) sob todas as possíveis interpretações (similar ao método da tabela-verdade em lógica proposicional) em todas as estruturas não funciona, pois temos um número infinito de estruturas passíveis de avaliação. Mesmo assim, existem procedimentos que permitem verificar se uma fórmula é válida se ela de fato for válida, mas, caso não seja, esses procedimentos nunca terminam. Church e Turing provaram em 1936 que um procedimento que sempre termina não existe, classificando a lógica de primeira ordem como \textbf{semi-decidível}. De modo geral, se temos três fórmulas $\varphi, \psi$ e $\omega$, onde $\varphi$ é válida e $\neg \psi$ é válida mas nem $\omega$ nem $\neg \omega$ são válidas, qualquer procedimento que resolve SAT terminará e dará uma resposta quando recebe $\varphi$ ou $\psi$ como entrada, mas nunca terminará se recebe $\omega$. Veremos um desses procedimentos a seguir, que é a versão para a lógica de primeira ordem do método que estudamos anteriormente. 
