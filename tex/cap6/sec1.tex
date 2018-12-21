@@ -48,3 +48,77 @@ O conjunto que inclui todas essas sentenças, além das outras sentenças verdad
         \item Para todo símbolo de função $n$-ária de $L$ e termos $t_1,...,t_n,t_{n+1}$, inclua $f(t_1,...,t_n) = t_{n+1}$ se $f^A(t_1^A,...,t_n^A)$ for o mesmo elemento que $t_{n+1}^A$.
     \end{enumerate}
 \end{definition}
+
+\subsection{Modelo Canônico}
+Suponha que tenhamos o seguinte conjunto $T$ de sentenças atômicas:
+\[T = \{R(a), S(g(b), b), g(b) = g(a), g(b) = a, f(g(a),a) = b, S(a,a), R(g(b))\}\]
+
+De modo inverso ao diagrama positivo, queremos construir uma estrutura $D$ a partir de $T$, tal que $D$ seja modelo para todas as sentenças de $T$. Para tal, precisamos definir as quatro componentes de $D$: conjunto domínio, conjunto de destaques, conjunto de relações e conjunto de funções.
+
+\begin{description}
+    \item[Domínio] O domínio, a princípio, seria o conjunto de todos os termos fechados que aparecem em $T$. Porém, uma vez que $D$ deve satisfazer $g(b) = a$ e $g(b) = g(a)$, nessa estrutura, $a$, $g(b)$ e $g(a)$ devem ser o mesmo elemento. Desse modo, não faz sentido colocarmos os três no domínio, pois conjuntos não admitem repetição de elementos. Iremos então agrupar esses termos iguais em uma classe e colocar no domínio apenas algum termo que os represente, por exemplo, $a^\sim$. Assim, repetindo essa análise nas outras igualdades, o conjunto universo de $D$ é
+    \begin{center}
+        \begin{tikzpicture}[modal]
+            \node[world] (Dom) [align=left] {$a^\sim$ $b^\sim$};
+        \end{tikzpicture}
+    \end{center}
+    \item[Destaques] O conjunto de destaques é subconjunto do domínio, e deve conter todos os destaques que ocorrem em $T$:
+    \begin{center}
+        \begin{tikzpicture}[modal]
+            \node[world] (Dom) [align=left] {$a^\sim$ $b^\sim$};
+        \end{tikzpicture}
+    \end{center}
+    \item[Relações] O conjunto de relações contém todas as relações que ocorrem em $T$. Porém, uma vez que $D$ deve satisfazer as sentenças de $T$, é necessário incluir tais elementos nas relações.
+    \begin{center}
+        \begin{tikzpicture}[modal]
+            \node[world] (Dom) [align=left] {$R(-)$\\$S(-,-)$};
+        \end{tikzpicture}
+    \end{center}
+    Onde $R^D = \{a^\sim\}$ e $S^D = \{(a^\sim, b^\sim), (a^\sim, a^\sim)\}$.
+    \item[Funções] O conjunto de funções contém todas as funções que ocorrem em $T$. Porém, as funções de $D$ possuem como domínio o universo de $D$ e devemos, portanto, definí-las. 
+    \begin{center}
+        \begin{tikzpicture}[modal]
+            \node[world] (Dom) [align=left] {$f(-,-)$\\$g(-)$};
+        \end{tikzpicture}
+    \end{center}
+    Onde $f^D(a^\sim, a^\sim) = b^\sim$, $g^D(a^\sim) = a^\sim$ e $g^D(b^\sim) = a^\sim$.
+\end{description}
+
+$D$ é uma estrutura que é modelo para todas as sentenças de $T$ e é chamada \textbf{modelo canônico} de $T$. Antes de definir formalmente esse tipo de estrutura, precisamos definir o processo de selecionar um representante de uma classe que definimos na construção do domínio. Usaremos a noção de \textbf{classes de equivalência}. 
+\begin{definition}{A relação $\sim$}
+    Seja $L$ uma assinatura e $T$ um conjunto de sentenças atômicas que é o diagrama positivo de alguma $L$-Estrutura. Podemos definir a relação binária $\sim$ da seguinte forma:
+    \begin{center}
+        $\sim$ $= \{(t_1,t_2)$ | $(t_1 = t_2) \in T\}$
+    \end{center}
+    \begin{description}
+        \item[$\sim$ é reflexiva:] Para todo $t \in L$, $(t = t) \in T$, logo $(t,t) \in$ $\sim$.
+        \item[$\sim$ é simétrica:] Se $(t_1,t_2) \in$ $\sim$, significa que $(t_1 = t_2) \in T$. Como a igualdade é comutativa, $(t_2 = t_1) \in T$ e, portanto, $(t_2,t_1) \in$ $\sim$.
+        \item[$\sim$ é transitiva:] Se $(t_1,t_2) \in$ $\sim$ e $(t_2,t_3) \in$ $\sim$, significa que $(t_1 = t_2) \in T$ e $(t_2 = t_3) \in T$. Como a igualdade é transitiva, $(t_1 = t_3) \in T$. Desse modo, $(t_1,t_3) \in$ $\sim$.
+    \end{description}
+    Sendo reflexiva, simétrica e transitiva, $\sim$ é uma \textbf{relação de equivalência} e, portanto, particiona o conjunto domínio de modo a criar classes de equivalência.
+    \tcbsubtitle{Modelo canônico}
+    Seja $T$ um conjunto de sentenças atômicas de uma linguagem $L$. A $L$-Estrutura $B$ mais genérica possível que é modelo para todas as sentenças de $T$ é dita modelo canônico de $T$ e é definida da seguinte forma:
+    \begin{description}
+        \item[Domínio] O domínio é o conjunto dos representantes das classes de equivalência $t^\sim$ dos termos fechados de $L$ no conjunto $T$.
+        \item[Destaques] O conjunto de destaques contém todos os representantes das classes de equivalência $c^\sim$, onde $c$ é um símbolo de constante de $L$.
+        \item[Relações] Seja $R$ um símbolo de relação $n$-ária de $L$ e $t_1,...,t_n$ termos de $L$. Então $(t_1^\sim,...,t_n^\sim) \in R^B$ se, e somente se, $R(t_1,...,t_n) \in T.$
+        \item[Funções] Seja $f$ um símbolo de relação $n$-ária de $L$ e $t_1,...,t_n$ termos de $L$. Então $f^B(t_1^\sim,...,t_n^\sim) = f(t_1,...,t_n)^\sim$.
+    \end{description}
+\end{definition}
+
+O modelo canônico $D$ de um conjunto de sentenças $T$ é parecida com qualquer que tenha sido a estrutura $B$ que foi o seu modelo ``original'' (ou seja, $T$ é o diagrama positivo de $B$). $D$ é chamada de \textbf{canônico} pois serve de referencial para todos os modelos de $T$. Isso significa que podemos construir um homomorfismo de $D$ para qualquer outro modelo $B$ de $T$:
+\begin{center}
+    \begin{tabular}{l l}
+        $h: dom(D) \mapsto dom(B)$ \\
+        $h(t^\sim) = t^B$
+    \end{tabular}
+\end{center}
+\begin{enumerate}
+    \item Para todo símbolo de constante $c$ de $L$, $h(c^D) = c^B$. Como $c^D = c^\sim$, $h$ preserva destaques.
+    \item Para todo símbolo de relação $n$-ária $R$ de $L$ e toda $n$-upla $t_1,...,t_n$ de $L$, se $(t_1^\sim,...t_n^\sim) \in R^D$, então $R(t_1,...,t_n) \in T$. Dessa forma, $(t_1^B,...,t_n^B) \in R^B$ e, portanto, $(h(t_1^\sim), ..., h(t_n^\sim))$. Assim, $h$ preserva relações.
+    \item Para todo símbolo de função $n$-ária $f$ de $L$ e toda $n$-upla $t_1,...,t_n$ de $L$, por definição, $f^D(t_1^\sim,...,t_n^\sim) = f(t_1,...,t_n)^\sim$. Dessa forma, $h(f^D(t_1^\sim,...,t_n^\sim)) = h(f(t_1,...,t_n)^\sim) =$ $f(t_1,...,t_n)^D$ $= f^D(t_1^D,...,t_n^D) = f^D(h(t_1^\sim),...,h(t_n^\sim))$. Assim, $h$ preserva funções.
+\end{enumerate}
+
+Por preservar destaques, relações e funções, $h$ é um homomorfismo.
+
+Finalmente, uma vez que podemos construir um modelo para qualquer conjunto de sentenças atômicas, \textbf{todo conjunto de sentenças atômicas é satisfatível}.
