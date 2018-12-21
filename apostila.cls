@@ -10,7 +10,7 @@
 \RequirePackage{fancyhdr}
 \RequirePackage[dvipsnames]{xcolor}
 \RequirePackage{tikz}
-\RequirePackage{tcolorbox}
+\RequirePackage[theorems]{tcolorbox}
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 
@@ -88,3 +88,16 @@
         }
 
 \DeclareRobustCommand{\?}{\overset{?}{=}}
+
+\newtcbtheorem[number within=section]{mytheo}{\scshape Teorema} {colback=Peach!5,colframe=Peach!35!black,fonttitle=\bfseries}{th}
+\newenvironment{theorem}[1]
+    {
+        \vspace{10pt}    
+        \begin {mytheo}{#1}{#1}
+    }
+    {
+        \end{mytheo}
+        \vspace{10pt}
+    }
+
+\DeclareRobustCommand{\littlelabel}[1]{{\small\bfseries #1}}

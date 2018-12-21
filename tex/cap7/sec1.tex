@@ -47,7 +47,7 @@ O algoritmo de Herbrand usa como base o conceito de \textbf{forma resolvida}: um
 Para ilustrar, vamos executar o algoritmo sobre o seguinte conjunto de equações $S$:
 \[S = \{f(g(z), x) = f(y, x), f(y,x) = f(y,h(a)), f(g(z), x) = f(y, h(a))\}\]
 \begin{center}
-    \begin{tabular}{l l}
+    \begin{tabular}{r l}
         \textbf{DT} & $\{g(z) \? y, x \? x, f(y,x) \? f(y,h(a)), f(g(z), x) \? f(y, h(a))\}$ \\
         \textbf{O} & $\{y \? g(z), x \? x, f(y,x) \? f(y,h(a)), f(g(z), x) \? f(y, h(a))\}$ \\
         \textbf{EV} & $\{\mathbf{y \? g(z)}, x \? x, f(g(z),x) \? f(g(z),h(a)), f(g(z), x) \? f(g(z), h(a))\}$ \\
@@ -74,3 +74,87 @@ $S$ é unificável e a unificadora mais geral de $S$ é $\Theta = [g(z)\diagup y
 Uma vez que $h \neq g$, o algoritmo falha ao tentar aplicar uma regra em $h(a) \? g(b)$. Desse modo, o sistema não é unificável. De fato: não existe nenhuma substituição de variáveis que torne $x = h(a)$ e $x = g(b)$ ao mesmo tempo. 
 
 No contexto de resolução, portanto, usaremos o algoritmo de Herbrand sempre que tentarmos aplicar a regra da resolução em dois literais complementares. Caso sejam unificáveis, procedemos com o resolvente. Caso contrário, não aplicaremos a regra.
+
+\subsection{Remoção dos quantificadores}
+Já concluímos um dos problemas referentes ao método da resolução, que se preocupava com a identicidade de literais. Agora, veremos o outro grande problema, sobre a sintaxe da entrada. As entradas do método da resolução devem estar na forma normal conjuntiva, que, como sabemos, é uma conjunção de cláusulas. Porém, as fórmulas da lógica de primeira ordem podem possuir quantificadores, que não estão presentes nessa definição. Dessa maneira, precisamos removê-los. A estratégia que usaremos será a seguinte: colocar todos os quantificadores no início da fórmula, e então removê-los.
+
+\subsubsection{Forma Normal Prenex}
+Uma fórmula $\varphi$ está na \textbf{forma normal prenex} (\textit{prefixed normal expression}) se, e somente se, ela tem o seguinte formato:
+\[(Q_1 x_1Q_2 x_2...Q_n x_n)(\psi)\]
+Onde $(Q_1 x_1Q_2 x_2...Q_n x_n)$ é uma parte com quantificadores e chamada de \textbf{prefixo} de $\varphi$ e $\psi$ é uma fórmula sem quantificadores chamada de \textbf{matriz} de $\varphi$.
+
+\begin{theorem}{}
+    Para toda fórmula $\varphi$ na forma normal prenex, existe uma fórmula $\psi$ tal que:
+    \begin{itemize}
+        \item $\psi$ está na forma normal prenex;
+        \item $\psi$ é logicamente equivalente a $\phi$.
+    \end{itemize}
+    \tcbsubtitle{Prova (transformação para a FNP)}
+    Para provar o teorema, faremos uma prova por construção mostrando um método que transforma qualquer fórmula $\varphi$ para outra $\psi$ logicamente equivalente e na forma normal prenex.
+    \begin{enumerate}
+        \item Elimine os conectivos $\rightarrow$ e $\leftrightarrow$.
+        \item Aplique repetidamente, além das equivalências conhecidas $(\neg \neg L) \equiv L$ (lei da dupla negação), as leis de De Morgan e a propriedade distributiva, as equivalências a seguir, até que a fórmula esteja na forma normal prenex.
+        \begin{itemize}
+            \item $\neg \forall x (\omega) \equiv \exists x (\neg \omega)$
+            \item $\neg \exists x (\omega) \equiv \forall x (\neg \omega)$
+            \item $\forall x (\varphi(x)) \land \forall x (\psi(x)) \equiv \forall x (\varphi(x) \land \psi(x))$
+            \item $\exists x (\varphi(x)) \lor \exists x (\psi(x)) \equiv \exists x (\varphi(x) \lor \psi(x))$
+            \item $Q x (\varphi(x))\equiv Q y(\varphi(y))$, onde $Q \in \{\forall, \exists\}$
+            \item $Q x (\varphi(x)) \land \psi \equiv Q x (\varphi(x) \land \psi)$, onde $Q \in \{\forall, \exists\}$ 
+            \item $Q x (\varphi(x)) \lor \psi \equiv Q x (\varphi(x) \lor \psi)$, onde $Q \in \{\forall, \exists\}$ 
+        \end{itemize}
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{Forma Padrão de Skolem}
+
+Uma fórmula $\varphi$ na forma normal prenex está na \textbf{forma padrão de Skolem} se, e somente se, o prefixo de $\varphi$ não contém quantificadores existenciais. Em 1920, o lógico-matemático Thoralf Skolem definiu um método para remoção de quantificadores existenciais, que acabou ganhando seu nome: o \textbf{método da skolemização}.
+
+Suponha a seguinte estrutura $A$:
+\begin{center}
+    \begin{structure}
+        {$\mathbb{N}$}
+        {}
+        {$<$$(-,-)$}
+        {}
+        {}    
+    \end{structure}
+\end{center}
+
+
+A sentença $\varphi = \forall x \exists y R(x,y)$ é verdadeira em $A$, pois para todo natural $x$ existe um outro maior que ele, por exemplo, seu sucessor. Dessa forma, podemos retirar o existencial, substituindo a ocorrência de sua variável pela função sucessor aplicada a $x$, ou seja, $\varphi' = \forall x R(x,f(x))$.
+\begin{center}
+    \begin{structure}
+        {$\mathbb{N}$}
+        {}
+        {$<$$(-,-)$}
+        {}
+        {sucessor$(-,-)$}    
+    \end{structure}
+\end{center}
+
+$\varphi'$ é verdadeira nessa nova estrutura que é idêntica a $A$, adicionando-se a função $f$. A skolemização é, portanto, o processo de remover quantificadores existenciais e substituir as ocorrências das variáveis desses quantificadores por funções aplicadas a variáveis universalmente quantificadas anteriores a esses existenciais.
+
+\begin{theorem}{Teorema de Löwenheim-Skolem}
+    Seja $\varphi$ uma fórmula na forma normal prenex sobre uma assinatura $L$. Seja $\psi$ a fórmula resultante da remoção de cada quantificador existencial que ocorre em $\varphi$ e cujas variáveis correspondentes são substituídas por um termo do tipo $f(x_1,...,x_n)$, onde $f$ é um novo símbolo de função e $x_1,...,x_n$ são variáveis universalmente quantificadas imediatamente anteriores a esse existencial. Então, se existe uma $L$-Estrutura $A$ que é modelo para $\varphi$, é possível construir uma $L'$-Estrutura $B$ que é modelo para $\psi$, acrescentando a $A$ uma interpretação para cada símbolo novo de função em $L'$.
+\end{theorem}
+Caso não haja quantificadores universais anteriores a um existencial, a variável correspondente deste é substituída por um novo símbolo de constante (função de aridade zero). Uma função nova adicionada na assinatura é chamada \textbf{função de Skolem}, e uma constante nova é chamada \textbf{constante de Skolem}. A skolemização não preserva a equivalência das fórmulas resultante e original, mas preserva a satisfatibilidade: a original é satisfatível se, e somente se, a resultante é satisfatível.
+
+Para ilustrar o processo de remoção de quantificadores, vejamos as seguintes fórmulas:
+\begin{itemize}
+    \item $\forall xP(x) \rightarrow \exists x S(x)$: \\
+    $\equiv \neg \forall xP(x) \lor \exists x S(x)$ \\
+    $\equiv \exists x (\neg P(x)) \lor \exists xS(x)$ \\
+    $\equiv \underline{\exists x}(\neg P(x) \lor S(x))$ \littlelabel{FNP} \\
+    $\exists x \Rightarrow$ adicionando uma constante de Skolem $a$ na assinatura; \\
+    $\equiv \neg P(a) \lor S(a)$ \littlelabel{FPS}
+    \item $\exists x(R(x,y) \rightarrow \forall y(P(z,y) \land \exists w(S(w,u) \lor \neg R(w,y))))$: \\
+    $\equiv \exists x(\neg R(x,y) \lor \forall y(P(z,y) \land \exists w(S(w,u) \lor \neg R(w,y))))$ \\
+    $\equiv \exists x(\neg R(x,y) \lor \forall m(P(z,m) \land \exists w(S(w,u) \lor \neg R(w,m))))$ \\
+    $\equiv \exists x\forall m(\neg R(x,y) \lor (P(z,m) \land \exists w(S(w,u) \lor \neg R(w,m))))$ \\
+    $\equiv \exists x\forall m(\neg R(x,y) \lor \exists w(P(z,m) \land (S(w,u) \lor \neg R(w,m))))$ \\
+    $\equiv \underline{\exists x}\forall m\underline{\exists w}(\neg R(x,y) \lor (P(z,m) \land (S(w,u) \lor \neg R(w,m))))$ \littlelabel{FNP} \\
+    $\exists x \Rightarrow$ adicionando uma constante de Skolem $a$ na assinatura; \\
+    $\exists w \Rightarrow$ adicionando uma função unária de Skolem $f(-)$ na assinatura; \\
+    $\equiv \forall m(\neg R(a,y) \lor (P(z,m) \land (S(f(m),u) \lor \neg R(f(m),m))))$ \littlelabel{FPS}
+\end{itemize}
