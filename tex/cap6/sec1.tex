@@ -27,17 +27,24 @@ Notamos que a interpretação $R^B =$ menor-que$(-,-)$ torna $\varphi$ falsa em 
 Usando as definições de modelo e contramodelo, podemos então definir os processos de criar um conjunto de sentenças atômicas a partir de uma estrutura de modo a descrevê-la; e de criar uma estrutura a partir de um conjunto de sentenças atômicas de modo a satisfazê-lo. 
 
 \subsection{Diagrama Positivo}
-Suponha que queremos reunir as sentenças atômicas que são verdadeiras na estrutura $B$ sob alguma interpretação de $L$ em $B$. Vamos tomar a interpretação a seguir como base:
+Dada uma estrutura $A$, queremos descrever minuciosamente as componentes dessa estrutura usando sentenças atômicas (uma ``descrição lógica'' de $A$). A ideia é escrever sentenças atômicas que descrevem: quais $n$-uplas do domínio de $A$ pertencem a cada relação $n$-ária de $A$; e como funcionam cada função de $A$. Vamos começar com um exemplo simples, usando a estrutura $B$ definida acima. Tomando a interpretação a seguir como base:
 \begin{itemize}
     \item $a^A = 0$ e $b^A = 2$;
     \item $R^A =$ menor-que$(-,-)$ e $S^A =$ divide$(-,-)$;
     \item $f^A =$ quadrado-mod-3$(-)$ e $g^A =$ soma-mod-3$(-,-)$.
 \end{itemize}
-E então, podemos reunir as seguintes sentenças atômicas que são verdadeiras em $B$ sob essa interpretação: $R(a,b)$, $R(a, f(b))$, $R(f(b), b)$, $R(g(a,a), b)$, $R(g(a,a), f(b))$, $S(f(b), a)$, $S(f(b), b)$, $S(b, a)$, $S(f(b),f(b))$, $S(b,b)$, $a = g(a,a)$, $b = g(f(b),f(b))$, $f(b) = g(b,b)$, $a = f(a)$, $b = g(b, a)$...
+Podemos usar essa linguagem simbólica para descrever $B$: $R(a,b)$, $R(a, f(b))$, $R(f(b), b)$, $R(g(a,a), b)$, $R(g(a,a), f(b))$, $S(f(b), a)$, $S(f(b), b)$, $S(b, a)$, $S(f(b),f(b))$, $S(b,b)$, $a = g(a,a)$, $b = g(f(b),f(b))$, $f(b) = g(b,b)$, $a = f(a)$, $b = g(b, a)$...
 
-O conjunto que inclui todas essas sentenças, além das outras sentenças verdadeiras em $B$ sob essa interpretação ou outras é chamado \textbf{diagrama positivo} de $B$.
-\begin{definition}{Diagrama positivo}
-    Seja $L$ uma assinatura e $A$ uma $L$-Estrutura. O conjunto de todas as sentenças atômicas sobre $L$ que são verdadeiras em $A$, ou seja, para as quais $A$ é modelo, é dito diagrama positivo de $A$ (notação $diag^+(A)$).
+O que fizemos foi descrever uma base para que possamos obter o conjunto de todas as sentenças atômicas que são verdadeiras em $B$ sob a interpretação dada. Chamamos esse conjunto de \textbf{diagrama positivo} de $B$. Para alcançar esse conjunto, precisamos completar essa base com o que falta para que ele inclua todas as sentenças atômicas verdadeiras em $B$. Assim, por exemplo, se $R(a,b)$ está nesse conjunto e $a = f(a)$ está nesse conjunto, então devemos incluir $R(f(a), b)$. Esse processo de completação é dito \textbf{fecho sob igualdade}.
+\begin{definition}{Fecho sob igualdade}
+    Seja $T$ um conjunto de sentenças atômicas sobre uma linguagem $L$. O fecho sob igualdade de $T$ é o menor conjunto $T'$ de sentenças atômicas sobre $L$ tal que:
+    \begin{itemize}
+        \item $T'$ contém $T$;
+        \item Se $T'$ contém $\varphi(t)$ e contém $(t = t')$, então $T'$ contém $\varphi(t')$. 
+        \item $T'$ contém $(t = t)$ para todo termo fechado $t$ de $L$.
+    \end{itemize}
+    \tcbsubtitle{Diagrama positivo}
+    Seja $L$ uma assinatura e $A$ uma $L$-Estrutura. O conjunto de todas as sentenças atômicas sobre $L$ que são verdadeiras em $A$ sob alguma interpretação de $L$ em $A$, ou seja, as sentenças atômicas para as quais $A$ é modelo, é dito diagrama positivo de $A$ (notação $diag^+(A)$).
 
     Caso $\langle \emptyset\rangle_A \neq A$, usamos a extensão de $A$ para gerar o diagrama positivo.
     \tcbsubtitle{Construção do diagrama positivo}
@@ -96,7 +103,8 @@ $D$ é uma estrutura que é modelo para todas as sentenças de $T$ e é chamada 
         \item[$\sim$ é transitiva:] Se $(t_1,t_2) \in$ $\sim$ e $(t_2,t_3) \in$ $\sim$, significa que $(t_1 = t_2) \in T$ e $(t_2 = t_3) \in T$. Como a igualdade é transitiva, $(t_1 = t_3) \in T$. Desse modo, $(t_1,t_3) \in$ $\sim$.
     \end{description}
     Sendo reflexiva, simétrica e transitiva, $\sim$ é uma \textbf{relação de equivalência} e, portanto, particiona o conjunto domínio de modo a criar classes de equivalência.
-    \tcbsubtitle{Modelo canônico}
+    \end{definition}
+    \begin{definition}{Modelo canônico}
     Seja $T$ um conjunto de sentenças atômicas de uma linguagem $L$. A $L$-Estrutura $B$ mais genérica possível que é modelo para todas as sentenças de $T$ é dita modelo canônico de $T$ e é definida da seguinte forma:
     \begin{description}
         \item[Domínio] O domínio é o conjunto dos representantes das classes de equivalência $t^\sim$ dos termos fechados de $L$ no conjunto $T$.
