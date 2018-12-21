@@ -86,3 +86,5 @@
            
             \vspace{10pt}
         }
+
+\DeclareRobustCommand{\?}{\overset{?}{=}}

@@ -1,0 +1,76 @@
+\section{Método da Resolução}
+
+A filosofia do método persiste: ser eficiente para certas entradas e eficiente em reconhecer essas entradas. Os conceitos como a regra da resolução e a forma normal conjuntiva continuam valendo, mas dessa vez, temos diferenças cruciais.
+\subsection{O Problema da Unificação de Termos}
+A regra da resolução determina que, se possuírmos literais complementares $L$ em uma cláusula $C_1$ e $\neg L$ em uma cláusula $C_2$, podemos usar a regra para criar uma cláusula nova -- o resolvente de $C_1$ e $C_2$, com os outros literais das cláusulas. Porém, para isso acontecer, $L$ em $C_1$ deve ser obviamente idêntico a $L$ em $C_2$. Isso significa que, se tivermos dois literais $R(a)$ e $\neg R(x)$, para podermos aplicar a regra, precisamos torná-los idênticos e isso é possível ao fazermos $[a\diagup x]$. Porém, não podemos aplicar a regra em $P(a)$ e $\neg P(b)$, pois não há substituição de variáveis em seus termos que torne $P(a) = P(b)$. De modo geral, precisamos de um método que determine se tal substituição existe. Estamos diante de um problema de decisão.
+
+\begin{description}
+    \item[Dados:] dois termos $t_1$ e $t_2$;
+    \item[Pergunta-se:] existe uma substituição de variáveis que torne $t_1$ e $t_2$ idênticos? 
+\end{description}
+
+Caso tal substituição exista, dizemos que $t_1$ e $t_2$ são termos \textbf{unificáveis} e a substituição é dita \textbf{unificadora}. Em 1930, o matemático Jacques Herbrand definiu um algoritmo simples que resolve o problema usando regras de transformação de um conjunto de equações. Uma \textbf{equação} é um par de termos $(s = t)$. Um \textbf{sistema de equações} $S$ é um multiconjunto de equações e uma substituição $\Theta$ é unificadora de $S$ se ela unifica todas as equações de $S$. O conjunto de todas as substituições unificadoras de $S$ é denotado por $U(S)$. Esse conjunto pode conter várias substituições possíveis, mas uma delas é a ``ótima''. Por exemplo, para os termos abaixo:
+\[f(y))\quad\text{e}\quad f(g(z))\]
+A substituição $\Theta_1 = [g(b)\diagup y, b\diagup z]$ unifica os termos, mas não é a única possível. $\Theta_2 = [g(z)\diagup y]$ também os unifica e é mais simples. A substituição mais simples que unifica dois termos dentre as possíveis é dita \textbf{unificadora mais geral}.
+
+O algoritmo de Herbrand usa como base o conceito de \textbf{forma resolvida}: uma equação está na forma resolvida em um sistema $S$ se for da forma $v = t$ (variável = termo) e $v$ for uma variável resolvida, ou seja, $v$ não ocorre em $t$ e em nenhuma outra equação de $S$. Caso todas as equações de $S$ estejam na forma resolvida, o sistema é unificável e o algoritmo devolve a substituição unificadora mais geral de $S$.
+
+\begin{definition}{Regras de Transformação}
+    \begin{description}
+        \item[Eliminação de Equações Triviais] $S \cup \{t \? t\} \Rightarrow S$
+        \item[Decomposição de Termos] $S \cup \{f(t_1,...,t_n) \? f(s_1,...,s_n)\} \Rightarrow S \cup \{t_1 \? s_1,...,t_n \? s_n\}$
+        \begin{itemize}
+            \item $S \cup \{f(t_1,...,t_n) \? g(t_1,...,t_m)\}$, onde $f \neq g$ ou $n \neq m \Rightarrow$ \textit{falha}.
+        \end{itemize}  
+        \item[Orientação] $S \cup \{t \? x\} \Rightarrow S \cup \{x \? t\}$ 
+        \item[Eliminação de Variáveis] $S \cup \{x \? t\} \Rightarrow S[x\diagup t] \cup \{x \? t\}$, se $x$ não ocorre em $t$.
+        \begin{itemize}
+            \item Se $x$ ocorre em $t \Rightarrow$ \textit{falha}.
+        \end{itemize}
+    \end{description}
+    \tcbsubtitle{Algoritmo de Herbrand}
+    \begin{description}
+        \item[Entrada:] um sistema de equações $S$;
+        \item[Saída:] Se $S$ for unificável, a unificadora mais geral de $S$; caso contrário, falha.
+    \end{description}
+    \begin{enumerate}
+        \item Para cada equação $s$ de $S$:
+        \begin{enumerate}
+            \item [1.1] Se $s$ estiver na forma resolvida, passe para a próxima.
+            \item [1.2] Caso contrário, aplique uma das regras de transformação, com prioridade decrescente de cima pra baixo, e vá para o início.
+            \item [1.3] Se não for possível aplicar uma regra, retorne \textbf{não é unificável}.
+        \end{enumerate}
+        \item Caso todas as equações de $s$ estejam na forma resolvida, retorne a \textbf{unificadora mais geral} formada pelas equações presentes em $S$.
+    \end{enumerate}
+\end{definition}
+
+Para ilustrar, vamos executar o algoritmo sobre o seguinte conjunto de equações $S$:
+\[S = \{f(g(z), x) = f(y, x), f(y,x) = f(y,h(a)), f(g(z), x) = f(y, h(a))\}\]
+\begin{center}
+    \begin{tabular}{l l}
+        \textbf{DT} & $\{g(z) \? y, x \? x, f(y,x) \? f(y,h(a)), f(g(z), x) \? f(y, h(a))\}$ \\
+        \textbf{O} & $\{y \? g(z), x \? x, f(y,x) \? f(y,h(a)), f(g(z), x) \? f(y, h(a))\}$ \\
+        \textbf{EV} & $\{\mathbf{y \? g(z)}, x \? x, f(g(z),x) \? f(g(z),h(a)), f(g(z), x) \? f(g(z), h(a))\}$ \\
+        \textbf{EET} & $\{\mathbf{y \? g(z)}, f(g(z),x) \? f(g(z),h(a)), f(g(z), x) \? f(g(z), h(a))\}$ \\
+        \textbf{DT} & $\{\mathbf{y \? g(z)}, g(z) \? g(z), x \? h(a), f(g(z), x) \? f(g(z), h(a))\}$ \\
+        \textbf{EET} & $\{\mathbf{y \? g(z)}, x \? h(a), f(g(z), x) \? f(g(z), h(a))\}$ \\
+        \textbf{EV} & $\{\mathbf{y \? g(z)}, \mathbf{x \? h(a)}, f(g(z), h(a)) \? f(g(z), h(a))\}$ \\
+        \textbf{DT} & $\{\mathbf{y \? g(z)}, \mathbf{x \? h(a)}, g(z) \? g(z), h(a) \? h(a)\}$ \\
+        \textbf{EET} & $\{\mathbf{y \? g(z)}, \mathbf{x \? h(a)}, h(a) \? h(a)\}$ \\
+        \textbf{EET} & $\{\mathbf{y \? g(z)}, \mathbf{x \? h(a)}\}$ 
+    \end{tabular}
+\end{center}
+$S$ é unificável e a unificadora mais geral de $S$ é $\Theta = [g(z)\diagup y, h(a) \diagup x]$. Isso significa que, para os termos serem idênticos, basta substituir $x$ por $h(a)$ e $y$ por $g(z)$. Vejamos agora um exemplo onde o algoritmo falha:
+\[S' = \{g(f(x,x)) = g(f(h(a), g(b)))\}\]
+\begin{center}
+    \begin{tabular}{l l}
+        \textbf{DT} & $\{f(x,x) \? f(h(a), g(b))\}$ \\
+        \textbf{DT} & $\{x \? h(a), x \? g(b)\}$ \\
+        \textbf{EV} & $\{\mathbf{x \? h(a)}, h(a) \? g(b)\}$ \\
+        & $\{\mathbf{x \? h(a)}, {\color{Red}h(a) \? g(b)}\}$
+    \end{tabular}
+\end{center}
+
+Uma vez que $h \neq g$, o algoritmo falha ao tentar aplicar uma regra em $h(a) \? g(b)$. Desse modo, o sistema não é unificável. De fato: não existe nenhuma substituição de variáveis que torne $x = h(a)$ e $x = g(b)$ ao mesmo tempo. 
+
+No contexto de resolução, portanto, usaremos o algoritmo de Herbrand sempre que tentarmos aplicar a regra da resolução em dois literais complementares. Caso sejam unificáveis, procedemos com o resolvente. Caso contrário, não aplicaremos a regra.
