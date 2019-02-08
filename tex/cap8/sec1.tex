@@ -1,0 +1,49 @@
+\section{O Programa de Hilbert}
+
+No fim do século XIX, os matemáticos estavam em busca de fundamentos para a matemática, ou seja, um conjunto contendo as definições mais elementares da matemática, que naquele momento, era tida como a Aritmética. Alguns matemáticos (incluindo Gottlob Frege, o fundador da Lógica de Primeira Ordem) tentaram definir tais fundamentos, mas foram pegos de surpresa com a aparição de paradoxos, que causou o questionamento dos métodos e lógica usada pela matemática. Esse período foi conhecido como a \textit{crise dos fundamentos da matemática}.
+
+Em resposta, o alemão David Hilbert propôs uma solução bastante ambiciosa: representar cada uma das teorias da matemática por um conjunto finito de axiomas (leis básicas), e provar que esse conjunto é consistente usando a lógica de primeira ordem. Ao fazermos isso, \textbf{poderíamos então provar qualquer enunciado verdadeiro sobre essa teoria usando os axiomas}.
+
+Conjuntos desse tipo são ditos \textbf{teorias axiomáticas}. Por exemplo, em 1889, Giuseppe Peano propôs uma assinatura e uma teoria axiomática para a Aritmética consistindo de 7 leis básicas:
+
+\begin{table}[h]
+    \centering
+    \begin{tabularx}{\textwidth}{c X}
+        \begin{structure}
+            {$\mathbb{N}$}
+            {}
+            {$<$$(-,-)$}
+            {$0$}
+            {sucessor$(-)$\\$+(-,-)$\\$\times(-,-)$}
+        \end{structure}
+    &
+        \begin{tabular}{l}
+            1 símbolo de destaque: $0$;
+            \\1 símbolo de relação binária: $<$;
+            \\1 símbolo de função unária: $s$;
+            \\2 símbolos de função binária: $+$, $\times$
+        \end{tabular}
+    \end{tabularx}
+\end{table}
+
+\begin{enumerate}
+    \item \textbf{0 não é sucessor de nenhum número.}
+    \\ $\neg\exists x(0 = s(x))$
+    \item \textbf{A função sucessor é injetora.}
+    \\ $\forall x\forall y((s(x) = s(y)) \rightarrow x = y)$
+    \item \textbf{Lei da Indução Matemática}
+    \\ $(P(0) \land \forall x(P(x) \rightarrow P(s(x)))) \rightarrow \forall y P(y)$
+    \item \textbf{Lei da Recursividade da Adição}
+    \\ $\forall x\forall y((x + s(y)) = s(x + y))$
+    \item \textbf{0 é elemento neutro da adição.}
+    \\ $\forall x((x + 0) = x)$
+    \item \textbf{Lei da Recursividade da Multiplicação}
+    \\ $\forall x\forall y((x \times s(y)) = (x \times y) + x)$
+    \item \textbf{A multiplicação de qualquer número por 0 resulta em 0.}
+    \\ $\forall x((x \times 0) = 0)$
+\end{enumerate}
+
+Podemos provar vários enunciados a partir desses axiomas, e então usá-los para provar mais enunciados. Por exemplo, podemos provar que 1 é elemento neutro da multiplicação usando os axiomas 5, 6 e 7:
+\[\{\forall x((x + 0) = x), \forall x\forall y((x \times s(y)) = (x \times y) + x), \forall x((x \times 0) = 0)\} \vdash \forall x((x \times s(0)) = x)\]
+
+E essa é a proposta de Hilbert. Uma vez que isso possa ser feito, teremos um sistema que é \textbf{completo} (todo enunciado verdadeiro é demonstrável a partir dos axiomas) e \textbf{correto} (todo enunciado que é demonstrável a partir dos axiomas é verdadeiro).
