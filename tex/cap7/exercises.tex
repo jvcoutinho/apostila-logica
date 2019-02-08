@@ -1,0 +1,151 @@
+\begin{rexercises} 
+
+    \begin{question}
+        Dadas as sentenças a seguir:
+        \begin{enumerate}
+            \item[1:] Se o unicórnio é lenda, é imortal, mas se não é lenda, é mamífero.
+            \item[2:] O unicórnio, se é imortal ou mamífero, é chifrudo.
+            \item[3:] O unicórnio, se é chifrudo, é bruxaria.
+            \item[4:] O unicórnio é bruxaria.
+            \item[5:] O unicórnio é chifrudo.
+        \end{enumerate}
+        Prove que $\{1, 2, 3\} \vDash 4 \land 5$.
+        \begin{resolution}
+            Esse é o mesmo conjunto de sentenças visto no início da 2ª parte, e como vimos, estas são as sentenças na lógica de primeira ordem:
+            \begin{enumerate}
+                \item[1:] $(L(u) \rightarrow I(u)) \land (\neg L(u) \rightarrow M(u))$ 
+                \item[2:] $(I(u) \lor M(u)) \rightarrow C(u)$
+                \item[3:] $C(u) \rightarrow B(u)$
+                \item[4:] $B(u)$
+                \item[5:] $C(u)$
+            \end{enumerate} 
+        
+            Queremos provar que $\{1, 2, 3\} \vDash 4 \land 5$. Sabemos que Resolução não responde se uma fórmula é consequência lógica de um conjunto de premissas, então utilizaremos a equivalência:
+            \begin{center}
+                $\Gamma \vDash \varphi$ se, e somente se, $\Gamma \cup \{\neg \varphi\}$ é insatisfatível
+            \end{center}
+            Assim, queremos responder se $\{1, 2, 3, \neg (4 \land 5)\}$ é insatisfatível. Vamos transformar cada sentença do conjunto para a sua forma normal conjuntiva:
+
+            \begin{itemize}
+                \item $(L(u) \rightarrow I(u)) \land (\neg L(u) \rightarrow M(u))$
+                \\ $\equiv (\neg L(u) \lor I(u)) \land (L(u) \lor M(u))$ \littlelabel{FNC}
+                \item $(I(u) \lor M(u)) \rightarrow C(u)$
+                \\ $\equiv \neg(I(u) \lor M(u)) \lor C(u)$
+                \\ $\equiv (\neg I(u) \land \neg M(u)) \lor C(u)$
+                \\ $\equiv (\neg I(u) \lor C(u)) \land (\neg M(u) \lor C(u))$ \littlelabel{FNC}
+                \item $C(u) \rightarrow B(u)$
+                \\ $\equiv \neg C(u) \lor B(u)$ \littlelabel{FNC}
+                \item $\neg (B(u) \land C(u))$
+                \\ $\equiv \neg B(u) \lor \neg C(u)$ \littlelabel{FNC}
+            \end{itemize}
+
+            Assim:
+            \begin{center}
+                $(\neg L(u) \lor I(u))^{C_1} \land (L(u) \lor M(u))^{C_2} \land (\neg I(u) \lor C(u))^{C_3} \land (\neg M(u) \lor C(u))^{C_4} \land (\neg C(u) \lor B(u))^{C_5} \land (\neg B(u) \lor \neg C(u))^{C_6}$
+            \end{center}
+
+            \begin{itemize}
+                \item[] \propagate{5}{6}{}{\neg C(u)^{C_7}}
+                \item[] \propagate{7}{4}{}{\neg M(u)^{C_8}}
+                \item[] \propagate{8}{2}{}{L(u)^{C_9}}
+                \item[] \propagate{9}{1}{}{I(u)^{C_{10}}}
+                \item[] \propagate{10}{3}{}{C(u)^{C_{11}}}
+                \item[] \propagate{11}{7}{}{()}  
+            \end{itemize}
+            Encontrada a cláusula vazia, temos que $\{1, 2, 3, \neg (4 \land 5)\}$ é insatisfatível e, portanto, $\{1, 2, 3\} \vDash 4 \land 5$.
+        \end{resolution}
+    \end{question}
+
+    \begin{question}
+        Prove que se uma relação binária é reflexiva e circular, então ela é simétrica.
+        \begin{resolution}
+            Iremos tomar o símbolo $R$ para representar a relação. Escrevendo as definições de relação reflexiva, circular e simétrica em lógica de primeira ordem, temos:
+            \begin{enumerate}
+                \item[1:] $\forall x R(x,x)$
+                \item[2:] $\forall x\forall y\forall z((R(x, y) \land R(y, z) \rightarrow R(z, x)))$
+                \item[3:] $\forall x\forall y(R(x,y) \rightarrow R(y, x))$
+            \end{enumerate} 
+            Queremos provar que $\{1, 2\} \vDash 3$. Usaremos a equivalência:
+            \begin{center}
+                $\Gamma \vDash \varphi$ se, e somente se, $\Gamma \cup \{\neg \varphi\}$ é insatisfatível
+            \end{center}
+            Ou seja, queremos provar que $\{1, 2, \neg 3\}$ é insatisfatível. Transformando cada sentença para sua forma normal conjuntiva:
+            \begin{itemize}
+                \item $\forall x R(x,x)$
+                \\ $\equiv R(x, x)$ \littlelabel{FNC}
+                \item $\forall x\forall y\forall z((R(x, y) \land R(y, z)) \rightarrow R(z, x))$
+                \\ $\equiv (R(x, y) \land R(y, z)) \rightarrow R(z, x)$
+                \\ $\equiv \neg (R(x, y) \land R(y, z)) \lor R(z, x)$
+                \\ $\equiv \neg R(x, y) \lor \neg R(y, z) \lor R(z, x)$  \littlelabel{FNC}
+                \item $\neg \forall x\forall y(R(x,y) \rightarrow R(y, x))$
+                \\ $\equiv \exists x \exists y \neg(R(x, y) \rightarrow R(y, x))$ \littlelabel{FNP}
+                \\ $\exists x \Rightarrow$ adicionando uma constante de Skolem $a$ na assinatura;
+                \\ $\exists y \Rightarrow$ adicionando uma constante de Skolem $b$ na assinatura;
+                \\ $\equiv \neg(R(a, b) \rightarrow R(b, a))$ \littlelabel{FPS}
+                \\ $\equiv \neg(\neg R(a, b) \lor R(b, a))$
+                \\ $\equiv R(a, b) \land \neg R(b, a)$ \littlelabel{FNC}
+            \end{itemize}
+            Assim:
+            \[R(x, x)^{C_1} \land (\neg R(x, y) \lor \neg R(y, z) \lor R(z, x))^{C_2} \land  R(a, b)^{C_3} \land \neg R(b, a)^{C_4}\]
+            \begin{itemize}
+                \item [] \propagate{1}{4}{}{\text{não são unificáveis}}
+                \item [] \propagate{2}{3}{, pela unificadora $\Theta = [a\diagup x, b\diagup y]$}{(\neg R(b, z) \lor R(z, a))^{C_5}}
+                \item [] \propagate{5}{4}{, pela unificadora $\Theta = [b\diagup z]$}{\neg R(b, b)^{C_6}}
+                \item [] \propagate{6}{1}{, pela unificadora $\Theta = [b\diagup x]$}{()}
+            \end{itemize}
+            Encontrada a cláusula vazia, temos que $\{1, 2, \neg 3\}$ é insatisfatível e, portanto, $\{1, 2\} \vDash 3$.
+        \end{resolution}
+    \end{question}
+\end{rexercises}
+
+\begin{exercises}
+    \begin{question}
+       Para cada uma das fórmulas abaixo, transforme-a para a sua forma normal prenex e, em seguida, aplique a skolemização na fórmula resultante para obter a sua forma padrão de Skolem.
+       
+       \begin{enumerate}
+           \item $\exists x(B(x) \land \forall y K(x, y)) \rightarrow \forall z(T(z) \land \neg \forall x B(x))$
+           \item $\forall x \exists y(\exists w (P(w) \land \neg Q(y)) \rightarrow \exists w \forall k (T(k, x) \lor P(w)))$
+           \item $\forall y(\forall x P(x, y) \rightarrow \exists z Q(x, z))$
+           \item $\exists x \forall y P(x, y) \lor \neg \exists y(Q(y) \rightarrow \forall z R(z))$
+       \end{enumerate}
+    \end{question}
+
+    \begin{question}
+        Construa uma estrutura que sirva como contraexemplo para mostrar que $\exists x P(x) \land \exists x Q(x) \not\equiv \exists x(P(x) \land Q(x))$.
+    \end{question}
+
+    \begin{question}
+        Construa uma estrutura que sirva como contraexemplo para mostrar que $\forall x P(x) \lor \forall x Q(x) \not\equiv \forall x(P(x) \lor Q(x))$.
+    \end{question}
+
+    \begin{question}
+        Use o algoritmo de Herbrand para determinar se os conjuntos de termos abaixo são unificáveis. Em caso positivo, dê a substituição unificadora mais geral.
+        \begin{enumerate}
+            \item $\{h(f(g(y))), h(f(g(g(a)))), h(y)\}$
+            \item $\{q(z,x,f(y)), q(z, h(z,w), f(w)), q(z, h(a, g(b)), f(g(b)))\}$
+            \item $\{h(f(x, y), g(f(a, y))), h(f(a,y), g(z)), h(f(a,b), g(w))\}$
+            \item $\{f(g(x, h(z))), f(g(x, h(x))), f(g(a, h(a)))\}$
+        \end{enumerate}
+    \end{question}
+
+    \begin{question}
+        Execute o Método da Resolução para responder às instâncias do Problema da Satisfatibilidade a seguir.
+        \begin{enumerate}
+            \item $\{P(x, a) \lor Q(x), \neg P(f(y), a) \lor Q(y), \neg Q(f(b))\} \vDash Q(b)$?
+            \item $\{\forall x(P(x) \rightarrow \exists yQ(x, y)), \forall x\forall y \forall z(Q(x, z) \rightarrow P(f(y)))\} \vDash \forall x(P(x) \rightarrow \exists yP(f(y)))$?
+            \item $\{\forall x(\exists y(S(x, y) \land M(y)) \rightarrow \exists y(I(y) \land E(x,y)))\} \vDash \neg\exists xI(x) \rightarrow \forall x\forall y(S(x, y) \rightarrow \neg M(y))$?
+        \end{enumerate}
+    \end{question}
+
+    \begin{question}
+        $\star$ Crie uma assinatura e uma estrutura apropriadas para representar as sentenças a seguir, e use o Método da Resolução para mostrar que $\{1, 2, 3, 4, 5\} \vDash 6$, onde:
+        \begin{enumerate}
+            \item [1:] Todo cachorro uiva à noite.
+            \item [2:] Qualquer um que tenha gato em casa não tem nenhum rato em casa.
+            \item [3:] Todos que têm sono leve, não têm animal de estimação que uiva à noite em casa.
+            \item [4:] João tem um animal de estimação em casa.
+            \item [5:] Todo animal de estimação é um gato ou um cachorro.
+            \item [6:] Se João tem sono leve, então João não tem ratos em casa.
+        \end{enumerate}
+    \end{question}
+\end{exercises}

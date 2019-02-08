@@ -2,7 +2,9 @@
 
 A filosofia do método persiste: ser eficiente para certas entradas e eficiente em reconhecer essas entradas. Os conceitos como a regra da resolução e a forma normal conjuntiva continuam valendo, mas dessa vez, temos diferenças cruciais.
 \subsection{O Problema da Unificação de Termos}
-A regra da resolução determina que, se possuírmos literais complementares $L$ em uma cláusula $C_1$ e $\neg L$ em uma cláusula $C_2$, podemos usar a regra para criar uma cláusula nova -- o resolvente de $C_1$ e $C_2$, com os outros literais das cláusulas. Porém, para isso acontecer, $L$ em $C_1$ deve ser obviamente idêntico a $L$ em $C_2$. Isso significa que, se tivermos dois literais $R(a)$ e $\neg R(x)$, para podermos aplicar a regra, precisamos torná-los idênticos e isso é possível ao fazermos $[a\diagup x]$. Porém, não podemos aplicar a regra em $P(a)$ e $\neg P(b)$, pois não há substituição de variáveis em seus termos que torne $P(a) = P(b)$. De modo geral, precisamos de um método que determine se tal substituição existe. Estamos diante de um problema de decisão.
+Se em uma cláusula $C_1$ há um literal $L$ e em outra cláusula $C_2$ há o literal $\neg L$, a regra da resolução determina que podemos criar uma cláusula nova -- o resolvente de $C_1$ e $C_2$, sendo a disjunção de todos os outros literais de $C_1$ e $C_2$. Porém, uma condição importante é que $L$ em $C_1$ seja idêntico a $L$ (de $\neg L$) em $C_2$.
+
+Em lógica proposicional, esse problema é trivial pois avaliamos apenas variáveis. Mas em primeira ordem, caso dois literais não sejam idênticos, devemos ser capazes de detectar se eles \textbf{podem} ser idênticos, utilizando de substituição de variáveis. Por exemplo, podemos aplicar a regra em $R(a)$ e $\neg R(x)$ se tomarmos $[a\diagup x]$, mas o mesmo não é possível com $P(a)$ e $\neg P(b)$, pois não há substituição que torne os literais idênticos. De modo geral, precisamos de um procedimento que determine se dois literais podem ser idênticos.
 
 \begin{description}
     \item[Dados:] dois termos $t_1$ e $t_2$;
@@ -22,7 +24,6 @@ O algoritmo de Herbrand usa como base o conceito de \textbf{forma resolvida}: um
         \begin{itemize}
             \item $S \cup \{f(t_1,...,t_n) \? g(t_1,...,t_m)\}$, onde $f \neq g$ ou $n \neq m \Rightarrow$ \textit{falha}.
         \end{itemize}  
-        \item[Orientação] $S \cup \{t \? x\} \Rightarrow S \cup \{x \? t\}$ 
         \item[Eliminação de Variáveis] $S \cup \{x \? t\} \Rightarrow S[x\diagup t] \cup \{x \? t\}$, se $x$ não ocorre em $t$.
         \begin{itemize}
             \item Se $x$ ocorre em $t \Rightarrow$ \textit{falha}.
@@ -31,7 +32,7 @@ O algoritmo de Herbrand usa como base o conceito de \textbf{forma resolvida}: um
     \tcbsubtitle{Algoritmo de Herbrand}
     \begin{description}
         \item[Entrada:] um sistema de equações $S$;
-        \item[Saída:] Se $S$ for unificável, a unificadora mais geral de $S$; caso contrário, falha.
+        \item[Saída:] Se $S$ for unificável, a unificadora mais geral de $S$; caso contrário, $S$ não é unificável.
     \end{description}
     \begin{enumerate}
         \item Para cada equação $s$ de $S$:
@@ -49,12 +50,11 @@ Para ilustrar, vamos executar o algoritmo sobre o seguinte conjunto de equaçõe
 \begin{center}
     \begin{tabular}{r l}
         \textbf{DT} & $\{g(z) \? y, x \? x, f(y,x) \? f(y,h(a)), f(g(z), x) \? f(y, h(a))\}$ \\
-        \textbf{O} & $\{y \? g(z), x \? x, f(y,x) \? f(y,h(a)), f(g(z), x) \? f(y, h(a))\}$ \\
-        \textbf{EV} & $\{\mathbf{y \? g(z)}, x \? x, f(g(z),x) \? f(g(z),h(a)), f(g(z), x) \? f(g(z), h(a))\}$ \\
+        \textbf{EV} & $\{\mathbf{y \? g(z)}, x \? x, f({\color{Orange}g(z)},x) \? f({\color{Orange}g(z)},h(a)), f(g(z), x) \? f({\color{Orange}g(z)}, h(a))\}$ \\
         \textbf{EET} & $\{\mathbf{y \? g(z)}, f(g(z),x) \? f(g(z),h(a)), f(g(z), x) \? f(g(z), h(a))\}$ \\
         \textbf{DT} & $\{\mathbf{y \? g(z)}, g(z) \? g(z), x \? h(a), f(g(z), x) \? f(g(z), h(a))\}$ \\
         \textbf{EET} & $\{\mathbf{y \? g(z)}, x \? h(a), f(g(z), x) \? f(g(z), h(a))\}$ \\
-        \textbf{EV} & $\{\mathbf{y \? g(z)}, \mathbf{x \? h(a)}, f(g(z), h(a)) \? f(g(z), h(a))\}$ \\
+        \textbf{EV} & $\{\mathbf{y \? g(z)}, \mathbf{x \? h(a)}, f(g(z), {\color{Orange}h(a)}) \? f(g(z), h(a))\}$ \\
         \textbf{DT} & $\{\mathbf{y \? g(z)}, \mathbf{x \? h(a)}, g(z) \? g(z), h(a) \? h(a)\}$ \\
         \textbf{EET} & $\{\mathbf{y \? g(z)}, \mathbf{x \? h(a)}, h(a) \? h(a)\}$ \\
         \textbf{EET} & $\{\mathbf{y \? g(z)}, \mathbf{x \? h(a)}\}$ 
@@ -66,14 +66,14 @@ $S$ é unificável e a unificadora mais geral de $S$ é $\Theta = [g(z)\diagup y
     \begin{tabular}{l l}
         \textbf{DT} & $\{f(x,x) \? f(h(a), g(b))\}$ \\
         \textbf{DT} & $\{x \? h(a), x \? g(b)\}$ \\
-        \textbf{EV} & $\{\mathbf{x \? h(a)}, h(a) \? g(b)\}$ \\
+        \textbf{EV} & $\{\mathbf{x \? h(a)}, {\color{Orange}h(a)} \? g(b)\}$ \\
         & $\{\mathbf{x \? h(a)}, {\color{Red}h(a) \? g(b)}\}$
     \end{tabular}
 \end{center}
 
 Uma vez que $h \neq g$, o algoritmo falha ao tentar aplicar uma regra em $h(a) \? g(b)$. Desse modo, o sistema não é unificável. De fato: não existe nenhuma substituição de variáveis que torne $x = h(a)$ e $x = g(b)$ ao mesmo tempo. 
 
-No contexto de resolução, portanto, usaremos o algoritmo de Herbrand sempre que tentarmos aplicar a regra da resolução em dois literais complementares. Caso sejam unificáveis, procedemos com o resolvente. Caso contrário, não aplicaremos a regra.
+No contexto de resolução, portanto, usaremos o algoritmo de Herbrand sempre que tentarmos aplicar a regra da resolução em dois literais complementares. Caso sejam unificáveis, procedemos com o resolvente e \textbf{aplicamos a unificadora mais geral neste}. Caso contrário, não aplicaremos a regra.
 
 \subsection{Remoção dos quantificadores}
 Já concluímos um dos problemas referentes ao método da resolução, que se preocupava com a identicidade de literais. Agora, veremos o outro grande problema, sobre a sintaxe da entrada. As entradas do método da resolução devem estar na forma normal conjuntiva, que, como sabemos, é uma conjunção de cláusulas. Porém, as fórmulas da lógica de primeira ordem podem possuir quantificadores, que não estão presentes nessa definição. Dessa maneira, precisamos removê-los. A estratégia que usaremos será a seguinte: colocar todos os quantificadores no início da fórmula, e então removê-los.
@@ -84,10 +84,10 @@ Uma fórmula $\varphi$ está na \textbf{forma normal prenex} (\textit{prefixed n
 Onde $(Q_1 x_1Q_2 x_2...Q_n x_n)$ é uma parte com quantificadores e chamada de \textbf{prefixo} de $\varphi$ e $\psi$ é uma fórmula sem quantificadores chamada de \textbf{matriz} de $\varphi$.
 
 \begin{theorem}{}
-    Para toda fórmula $\varphi$ na forma normal prenex, existe uma fórmula $\psi$ tal que:
+    Para toda fórmula $\varphi$, existe uma fórmula $\psi$ tal que:
     \begin{itemize}
         \item $\psi$ está na forma normal prenex;
-        \item $\psi$ é logicamente equivalente a $\phi$.
+        \item $\psi$ é logicamente equivalente a $\varphi$.
     \end{itemize}
     \tcbsubtitle{Prova (transformação para a FNP)}
     Para provar o teorema, faremos uma prova por construção mostrando um método que transforma qualquer fórmula $\varphi$ para outra $\psi$ logicamente equivalente e na forma normal prenex.
@@ -133,7 +133,7 @@ A sentença $\varphi = \forall x \exists y R(x,y)$ é verdadeira em $A$, pois pa
     \end{structure}
 \end{center}
 
-$\varphi'$ é verdadeira nessa nova estrutura que é idêntica a $A$, adicionando-se a função $f$. A skolemização é, portanto, o processo de remover quantificadores existenciais e substituir as ocorrências das variáveis desses quantificadores por funções aplicadas a variáveis universalmente quantificadas anteriores a esses existenciais.
+$\varphi'$ é verdadeira nessa nova estrutura que é idêntica a $A$, adicionando-se a função $f$. A skolemização é, portanto, o processo de remover quantificadores existenciais, substituindo as ocorrências das variáveis desses quantificadores por funções aplicadas a variáveis universalmente quantificadas anteriores a esses existenciais.
 
 \begin{theorem}{Teorema de Löwenheim-Skolem}
     Seja $\varphi$ uma fórmula na forma normal prenex sobre uma assinatura $L$. Seja $\psi$ a fórmula resultante da remoção de cada quantificador existencial que ocorre em $\varphi$ e cujas variáveis correspondentes são substituídas por um termo do tipo $f(x_1,...,x_n)$, onde $f$ é um novo símbolo de função e $x_1,...,x_n$ são variáveis universalmente quantificadas imediatamente anteriores a esse existencial. Então, se existe uma $L$-Estrutura $A$ que é modelo para $\varphi$, é possível construir uma $L'$-Estrutura $B$ que é modelo para $\psi$, acrescentando a $A$ uma interpretação para cada símbolo novo de função em $L'$.
@@ -158,3 +158,5 @@ Para ilustrar o processo de remoção de quantificadores, vejamos as seguintes f
     $\exists w \Rightarrow$ adicionando uma função unária de Skolem $f(-)$ na assinatura; \\
     $\equiv \forall m(\neg R(a,y) \lor (P(z,m) \land (S(f(m),u) \lor \neg R(f(m),m))))$ \littlelabel{FPS}
 \end{itemize}
+
+Assim, para colocar as fórmulas na forma normal conjuntiva, primeiro colocamos-as na forma padrão de Skolem e simplesmente ignoramos os quantificadores universais.
