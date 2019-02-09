@@ -1,0 +1,40 @@
+\section{O Teorema da Incompletude}
+Contudo, em 1931, Kurt Gödel deu uma ``sentença de morte'' ao programa. Ele usou a Aritmética de Peano para provar seu primeiro \textbf{Teorema da Incompletude}:
+
+\begin{theorem}{Primeiro Teorema da Incompletude}
+Qualquer teoria axiomática que se proponha a formalizar a Aritmética não pode ser completa e correta ao mesmo tempo.
+\end{theorem}
+O teorema implica que, se supormos que tudo que demonstramos é verdadeiro (corretude), então há enunciados verdadeiros na matemática que não possuem prova (não completude). Por outro lado, se supormos que podemos provar qualquer enunciado verdadeiro (completude), então também podemos provar enunciados falsos (não corretude). 
+
+\subsection{A Estratégia de Gödel}
+A ideia inusitada de Gödel foi usar a Aritmética para falar de si própria: ele propôs uma maneira de escrever quaisquer sentenças da Aritmética sob a forma de um natural. Para isso, ele atribuiu um número primo a todo símbolo da assinatura de Peano e da lógica de primeira ordem. Por exemplo:
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c c c c c c c c c c c c c c c c c}
+        $0$ & $<$ & $s$ & $+$ & $\times$ & $\forall$ & $\exists$ & $\neg$ & $\land$ & $\lor$ & $\rightarrow$ & $x$ & y & $=$ & ( & ) &...
+        \\
+        2 & 3 & 5 & 7 & 11 & 13 & 17 & 19 & 23 & 29 & 31 & 37 & 41 & 43 & 47 & 53
+    \end{tabular}    
+\end{table}
+
+Assim, ele propôs escrever quaisquer enunciados da Aritmética, verdadeiros ou falsos, sob a forma de produtos de números primos, usando a codificação acima como os seus expoentes. Por exemplo:
+\[\neg \exists x(0 = s(x)) \equiv 2^{19} \times 3^{17} \times 5^{37} \times 7^{47} \times 11^{2} \times 13^{43} \times 17^5 \times 19^{47} \times 23^{37} \times 29^{53} \times 31^{53}\]
+\[\forall x((x + 0) = 0) \equiv 2^{13} \times 3^{47} \times 5^{47} \times 7^{37} \times 11^{7} \times 13^{2} \times 17^{53} \times 19^{43} \times 23^{2} \times 29^{53}\]
+
+O Teorema Fundamental da Aritmética garante que cada número possui uma fatoração prima única, então a codificação de Gödel é válida.
+
+\subsubsection{O Paradoxo do Mentiroso}
+O Paradoxo do Mentiroso é a seguinte sentença: ``Eu não sou verdadeira''. É um paradoxo pois, se supormos verdadeira, ela se afirma falsa e, se supormos falsa, ela se afirma verdadeira. Gödel tomou uma variante do paradoxo:
+\begin{center}
+    \textbf{Eu não sou demonstrável a partir dos axiomas.}
+\end{center}
+A sentença de Gödel não é um paradoxo, mas serviu para seu propósito. Gödel conseguiu codificar a sentença como um natural, usando a codificação anterior, implicando que ela é formalmente um enunciado da Aritmética. Tal feito é intrigante, pois:
+
+\begin{itemize}
+    \item Supondo que a sentença é falsa, temos que ela é demonstrável a partir dos axiomas. Supondo que a Aritmética é correta, a sentença deve ser verdadeira, o que é uma contradição. Desse modo, a suposição de que ela é falsa não pode ser verdade, e portanto, a sentença deve ser verdadeira.
+    \item Uma vez que é verdadeira, ela se afirma não demonstrável a partir dos axiomas. Assim, há uma sentença verdadeira na matemática que não podemos provar verdadeira, implicando que a Aritmética não é completa.
+    \item Podemos fazer o mesmo raciocínio com a suposição de que a Aritmética é completa. Sendo assim, a sentença não pode ser verdadeira. Desse modo, há uma sentença demonstrável na Aritmética, mas que é falsa, implicando que a Aritmética não é correta.
+\end{itemize}
+
+Assim, a Aritmética não pode ser correta e completa ao mesmo tempo.

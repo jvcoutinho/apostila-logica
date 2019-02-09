@@ -17,6 +17,7 @@
 \RequirePackage{afterpage}
 \RequirePackage{pagecolor}
 \RequirePackage{tabularx}
+\RequirePackage{hyperref}
 
 \usetikzlibrary{positioning,arrows,calc}
 \tikzset{ modal/.style={>=stealth,shorten >=1pt,shorten <=1pt,auto, semithick}, world/.style={circle,draw,minimum size=0.5cm,fill=Emerald!15}, point/.style={circle,draw,inner sep=0.5mm,fill=black}, reflexive above/.style={->,loop,looseness=7,in=120,out=60}, reflexive below/.style={->,loop,looseness=7,in=240,out=300}, reflexive left/.style={->,loop,looseness=7,in=150,out=210}, reflexive right/.style={->,loop,looseness=7,in=30,out=330} }
@@ -121,6 +122,7 @@
 \newenvironment{exercises}
     {
         \newpage
+        \addcontentsline{toc}{section}{Exercícios}
         \thispagestyle{empty}
         \begin{tikzpicture}[overlay]
             \fill[color=Blue!60] (-5cm,-1.3cm) rectangle (\the\paperwidth,3cm);
@@ -141,6 +143,7 @@
 \newenvironment{rexercises}
     {
         \newpage
+        \addcontentsline{toc}{section}{Exercícios Resolvidos}
         \thispagestyle{empty}
         \begin{tikzpicture}[overlay]
             \fill[color=Green!60] (-5cm,-1.2cm) rectangle (\the\paperwidth,3cm);
