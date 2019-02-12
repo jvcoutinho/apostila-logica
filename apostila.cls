@@ -146,7 +146,7 @@
         \addcontentsline{toc}{section}{Exercícios Resolvidos}
         \thispagestyle{empty}
         \begin{tikzpicture}[overlay]
-            \fill[color=Green!60] (-5cm,-1.2cm) rectangle (\the\paperwidth,3cm);
+            \fill[color=Green!60] (-5cm,-1.3cm) rectangle (\the\paperwidth,3cm);
         \end{tikzpicture}
         \begin{center}
             {\huge\color{white}\scshape Exercícios Resolvidos}
