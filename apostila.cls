@@ -18,6 +18,7 @@
 \RequirePackage{pagecolor}
 \RequirePackage{tabularx}
 \RequirePackage{hyperref}
+\RequirePackage{enumitem}
 
 \usetikzlibrary{positioning,arrows,calc}
 \tikzset{ modal/.style={>=stealth,shorten >=1pt,shorten <=1pt,auto, semithick}, world/.style={circle,draw,minimum size=0.5cm,fill=Emerald!15}, point/.style={circle,draw,inner sep=0.5mm,fill=black}, reflexive above/.style={->,loop,looseness=7,in=120,out=60}, reflexive below/.style={->,loop,looseness=7,in=240,out=300}, reflexive left/.style={->,loop,looseness=7,in=150,out=210}, reflexive right/.style={->,loop,looseness=7,in=30,out=330} }

@@ -1,0 +1,207 @@
+\begin{rexercises}
+    \begin{question}
+        Escreva o enunciado abaixo na Lógica de Predicados. Crie uma assinatura e uma estrutura apropriadas para representá-lo, e escolha uma interpretação da assinatura na estrutura.
+        \begin{center}
+            Todo inteiro par maior que 2 pode ser escrito como uma soma de dois números primos. (\textbf{Conjectura de Goldbach})
+        \end{center}
+        \begin{resolution}
+            Queremos construir uma estrutura para a qual somos capazes de expressar a Conjectura de Goldbach na lógica de primeira ordem usando sua assinatura. Vamos analisar a sentença:
+            \begin{itemize}
+                \item O enunciado fala de inteiros. É razoável admitir, portanto, que o domínio da estrutura é o conjunto dos inteiros.
+                \item 2 é um inteiro que aparece ``destacado'' no enunciado. Desse modo, adicionamos-o ao conjunto de destaques.
+                \item Aparecem as relações: par; maior que; primo.
+                \item Aparece a função soma.
+            \end{itemize}
+            Temos, então:
+            \begin{center}
+                \begin{structure}
+                    {$\mathbb{Z}$}
+                    {}
+                    {par$(-)$\\maior$(-,-)$\\primo$(-)$}
+                    {$2$}
+                    {soma$(-,-)$}
+                \end{structure}
+            \end{center}
+            Podemos definir sua assinatura da seguinte forma:
+            \begin{itemize}
+                \item 1 símbolo de destaque: $a$
+                \item 2 símbolos de relação unária: $R$, $P$
+                \item 1 símbolo de relação binária: $M$
+                \item 1 símbolo de função binária: $s$
+            \end{itemize}
+            E então, com base na seguinte interpretação:
+            \begin{itemize}
+                \item $a^A = 2$
+                \item $R^A =$ Par$(-)$, $P^A =$ Primo$(-)$, $M^A =$ Maior$(-,-)$
+                \item $s^A =$ soma$(-,-)$
+            \end{itemize}
+            Podemos escrever a Conjectura de Goldbach na lógica de primeira ordem:
+            \[\forall x( (R(x) \land M(x, a)) \rightarrow \exists y \exists z(P(y) \land P(z) \land x = s(y, z)))\]
+        \end{resolution}
+    \end{question}
+
+    \begin{question}
+        Sejam $A$ e $B$ estruturas de mesma assinatura, definidas a seguir.
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{c c}
+                A & B \\
+                \begin{structure}
+                    {$\mathbb{N}$}
+                    {}
+                    {divide$(-)$}
+                    {$0$}
+                    {}
+                \end{structure}
+                &
+                \begin{structure}
+                    {$\mathbb{Z}$}
+                    {}
+                    {menor-ou-igual$(-)$}
+                    {$1$}
+                    {}
+                \end{structure}
+            \end{tabular}
+        \end{table}
+        \begin{enumerate}
+            \item Defina um homomorfismo de $A$ para $B$.
+            \item Determine se $A$ é subestrutura de $B$.
+        \end{enumerate}
+        \begin{resolution}
+            \begin{enumerate}[leftmargin=*]
+                \item Queremos definir uma função $h: dom(A) \mapsto dom(B)$ e provar que essa função é um homomorfismo de $A$ para $B$. Temos:
+                
+                \begin{center}
+                    \begin{tabular}{l}
+                        $h$$: dom(A) \mapsto dom(B)$ \\
+                        $h(x) = x + 1$
+                    \end{tabular}
+                \end{center}
+                \begin{itemize}
+                    \item $h$ preserva destaques, pois os destaques de $A$ são mapeados para destaques de $B$: $h(0) = 1$;
+                    \item $h$ preserva relações, pois se um par $(x, y) \in dom(A)$ pertence à relação divide, então $(h(x), h(y)) = (x + 1, y + 1) \in dom(B)$ pertence à relação menor-ou-igual.
+                    \item $h$ preserva funções trivialmente, pois não há funções na assinatura das estruturas.
+                \end{itemize}
+                Por preservar destaques, relações e funções, $h$ cumpre as 3 condições de homomorfismo e, portanto, é um.
+
+                \item Queremos verificar se as estruturas satisfazem as duas condições de subestrutura:
+                \begin{enumerate}
+                    \item[1.] Como $\mathbb{N} \subseteq \mathbb{Z}$, a primeira condição é satisfeita.
+                    \item[2.] Vamos analisar se a função identidade é uma imersão. Ela é injetora, mas não satisfaz a versão mais forte da 2ª condição de homomorfismo. Afinal, o par $(2, 3) \in dom(A)$ não pertence à relação divide, mas o par $(h(2), h(3)) = (2, 3) \in dom(B)$ pertence à relação menor-ou-igual. Mais que isso, a função identidade não é sequer um homomorfismo de $A$ para $B$, pois não preserva destaques.
+                \end{enumerate}
+                Desse modo, $A$ não é subestrutura de $B$.
+            \end{enumerate}
+        \end{resolution}
+    \end{question}
+\end{rexercises}
+
+\begin{exercises}
+    \begin{question}
+        Para cada sentença abaixo, construa uma assinatura e uma estrutura apropriada para representá-la, e, com base em uma interpretação, expresse-a na lógica de predicados.
+        \begin{enumerate}
+            \item Sejam $n$, $a$ e $b$ inteiros. Se $n \neq 0$, $n|ab$ e $mdc(n, a) = 1$, então $n|b$. (\textbf{Lema de Euclides})
+            \item Todo grafo planar é 4-colorível. (\textbf{Teorema das Quatro Cores})
+            \item Para toda proposição, ou ela é verdadeira ou sua negação é verdadeira. (\textbf{Lei do Terceiro Excluído})
+            \item Não existe três inteiros positivos $a$, $b$ e $c$ tal que $a^n + b^n = c^n$, onde $n$ é um inteiro maior que 2. (\textbf{Último Teorema de Fermat})
+            \item Um inteiro $n > 1$ é primo se, e somente se, $(n - 1)! \equiv -1 (mod n)$. (\textbf{Teorema de Wilson})
+            \item Sejam dois inteiros $a$ e $d$ tal que $d \neq 0$. Então existem dois inteiros $q$ e $r$ tal que $a = qd + r$ e $0 \leq r \leq |d|$. (\textbf{Algoritmo da Divisão}) 
+        \end{enumerate}
+    \end{question}
+
+    \begin{question}
+        Sejam $A$ e $B$ estruturas definidas abaixo.
+        \begin{table}[h!]
+            \centering
+            \begin{tabular}{c c}
+                A & B \\
+                \begin{structure}
+                    {$\mathbb{N}$}
+                    {}
+                    {menor-ou-igual$(-)$}
+                    {}
+                    {}
+                \end{structure}
+                &
+                \begin{structure}
+                    {$\mathbb{Z}$}
+                    {}
+                    {divide$(-)$}
+                    {}
+                    {}
+                \end{structure}
+            \end{tabular}
+        \end{table}
+        \begin{enumerate}
+            \item Defina um homomorfismo de $A$ para $B$.
+            \item Determine se $A$ é subestrutura de $B$.
+            \item Defina um automorfismo de $B$ diferente da função identidade.
+        \end{enumerate}
+    \end{question}
+
+    \begin{question}
+        Sejam $A$ e $B$ estruturas definidas abaixo.
+        \begin{center}
+            \begin{tabular}{c c}
+                A & B \\
+                \begin{structure}
+                    {$\mathbb{Z}$}
+                    {}
+                    {}
+                    {}
+                    {soma$(-,-)$}
+                \end{structure}
+                &
+                \begin{structure}
+                    {}
+                    {$0$ $1$}
+                    {}
+                    {}
+                    {soma-mod-2$(-,-)$} 
+                \end{structure}
+            \end{tabular}
+        \end{center}
+
+        Mostre que a função $h$, definida a seguir, é um homomorfismo de $A$ para $B$.
+        \begin{center}
+            \begin{tabular}{l}
+            $h: dom(A) \mapsto dom(B)$ \\
+            $h(x) = \begin{cases}
+                0 & \text{se $x$ for par} \\
+                1 & \text{caso contrário}
+            \end{cases}$
+            \end{tabular}
+        \end{center}
+    \end{question}
+
+    \begin{question}
+        Seja $A$ a estrutura abaixo.
+        \begin{center}
+            \begin{structure}
+                {$\mathbb{R}$}
+                {}
+                {$\leq$$(-,-)$}
+                {$0$\\$1$}
+                {soma$(-,-)$}
+            \end{structure}
+        \end{center}
+        Considere estruturas com os mesmos componentes de $A$, mas com os domínios abaixo. Determine se cada uma delas pode ser subestrutura de $A$.
+        \begin{enumerate}
+            \item Conjunto dos inteiros positivos
+            \item Conjunto dos inteiros
+            \item $\{0, 1, 2\}$
+        \end{enumerate}
+    \end{question}
+
+    \begin{question}
+        Dados o conjunto $X = \{2, 6\}$ e a estrutura $A$ abaixo, determine $\langle X \rangle_A$, ou seja, a menor subestrutura de $A$ que contém $X$ no domínio.
+        \begin{center}
+            \begin{structure}
+                {}
+                {$0$ $1$ $2$ $3$ $4$\\$5$ $6$ $7$ $8$ $9$}
+                {divide$(-,-)$}
+                {$0$ $4$ $5$}
+                {quadrado-mod-10$(-)$\\soma-mod-5$(-,-)$}
+            \end{structure}
+        \end{center}
+    \end{question}
+\end{exercises}
