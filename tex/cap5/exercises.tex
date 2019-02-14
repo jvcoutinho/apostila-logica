@@ -1,0 +1,41 @@
+\begin{rexercises}
+    \begin{question}
+        O termo $f(y,z)$ está livre para entrar no lugar da variável $y$ na fórmula\\ $\forall x(R(y, x) \rightarrow \forall z S(z, y))$? E na fórmula $\forall x(R(y, x) \rightarrow \forall y S(z, y))$?
+        \begin{resolution}
+            Observe que o enunciado é equivalente a perguntar se as substituições $[f(y,z)\diagup y]$ nas fórmulas $\forall x(R(y, x) \rightarrow \forall z S(z, y))$ e $\forall x(R(y, x) \rightarrow \forall y S(z, y))$ são possíveis de serem realizadas seguramente. 
+            
+            Para a primeira fórmula, vemos rapidamente que não, pois a variável $z$ em $f(y,z)$ se tornaria ligada, o que não deve acontecer. Para a segunda fórmula, a única ocorrência da variável $y$ que será substituída é a em $R(y,x)$, pois a em $S(z,y)$ é uma ocorrência ligada. Desse modo, as variáveis de $f(y,z)$ não se tornariam ligadas e, portanto, a substituição é possível.
+            Podemos também responder ambas as questões aplicando a função recursiva.
+        \end{resolution}
+    \end{question}
+\end{rexercises}
+
+\begin{exercises}
+    \begin{question}
+        Calcule o conjunto de variáveis livres da fórmula a seguir usando a função recursiva definida no capítulo.
+        \[\forall x(P(x, y) \rightarrow \exists y(R(z,  y) \lor \exists w(S(w, u) \land \neg R(w, y))))\]
+    \end{question}
+    \begin{question}
+        Repita a questão anterior, mas dessa vez calcule o conjunto de variáveis ligadas. Defina uma função recursiva para tal e aplique-a na fórmula.
+    \end{question}
+    \begin{question}
+        Determine se as substituições a seguir são possíveis de serem realizadas. Se sim, aplique.
+        \begin{enumerate}
+            \item $\forall x(R(y, x) \rightarrow S(y))$ $[f(y, z) \diagup y]$
+            \item $\forall z\forall x(R(y, x) \rightarrow S(y))$ $[f(y, z) \diagup y]$
+            \item $\forall x(P(x) \lor Q(x, f(y)))$ $[g(y) \diagup y]$
+            \item $\forall x(P(x) \lor Q(x, f(y)))$ $[g(x) \diagup y]$
+            \item $\forall x(R(x) \land S(z))$ $[g(z) \diagup y]$
+            \item $\forall x(R(x) \land S(z))$ $[g(z)\diagup z]$
+        \end{enumerate}
+    \end{question}
+    \begin{question}
+        Determine se as afirmações a seguir são verdadeiras ou falsas.
+        \begin{enumerate}
+            \item Se $R$ é um símbolo de relação unária, $f$ é um de função binária e $a$ e $b$ são de constantes, então $R(f(a,b))$ é um termo fechado.
+            \item Se $f$ é um símbolo de função unária e $x$ e $y$ são variáveis, então $f(x) = f(y)$ é uma fórmula atômica.
+            \item Se $f$ é um símbolo de função unária e $x$ e $y$ são variáveis, então $f(x) = f(y)$ é uma sentença atômica.
+            \item Se $f$ é um símbolo de função $n$-ária e $x_1,...,x_n$ são variáveis, então $f(x_1,...,x_n)$ é uma fórmula atômica.
+        \end{enumerate}
+    \end{question}
+\end{exercises}
